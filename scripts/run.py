@@ -17,12 +17,12 @@ excludes = [
     FileFolders.folders['cnn']['shared'],
 ]
 
-Functions.refresh(excludes)
+Functions.refresh()
 
 if component == 'aorta':
     runs = {
-        # 'cnn': '-predict',
-        'landmark': '',
+        'cnn': '-predict',
+        # 'landmark': '',
         # 'valve': '',
         # 'report': '',
     }
@@ -35,4 +35,5 @@ elif component == 'lv':
 pbar = tqdm(runs.keys(), desc='Left heart aparatus is being generated...')
 for r in pbar:
     pbar.set_description(f'Left heart aparatus is being generated -> {r} modules is running...')
+
     run_module(r, runs[r])

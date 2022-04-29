@@ -35,9 +35,11 @@ def run_module(env, args=""):
         env_path = conda_envs / env / 'python.exe'
     script = working_dir / f"{env}/scripts/run.py"
     
-    
     run(env_path, script, args)
-    
+
+    print(env_path)
+    print(script)
+
     report = working_dir / env / 'shared'
     shared_files = list(report.glob('*'))
     if len(shared_files) >= 1:
@@ -56,4 +58,5 @@ def run_script(env, script, args=""):
         env_path = conda_envs / env / 'python.exe'
 
     run(env_path, script, args)
-  
+
+
