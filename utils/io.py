@@ -1,3 +1,4 @@
+from doctest import OutputChecker
 import os
 import pathlib
 import sys
@@ -5,11 +6,12 @@ from dataclasses import dataclass
 from pathlib import Path
 import pickle
 import shutil
-import filecmp
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
+
+from utils import settings
 
 
 @dataclass
@@ -17,7 +19,8 @@ class FileFolders:
     folders = {
         'global': {
             'shared': working_dir / 'shared',
-            'valve_cusps': working_dir / 'shared' / 'valve_cusps'
+            'valve_cusps': working_dir / 'shared' / 'valve_cusps',
+            'output_dir': Path(settings.output_dir)
         },
     
         'cnn': {

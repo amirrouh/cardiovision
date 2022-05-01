@@ -1,5 +1,7 @@
 import os
 import sys
+import shutil
+from pathlib import Path
 
 from tqdm import tqdm
 
@@ -10,7 +12,7 @@ sys.path.append(working_dir)
 from utils.io import Functions
 from utils.helpers import run_module
 from utils.io import FileFolders
-from utils.settings import component
+from utils.settings import component, output_dir
 
 excludes = [
     FileFolders.folders['global']['shared'],
@@ -24,7 +26,7 @@ if component == 'aorta':
         'cnn': '-predict',
         # 'landmark': '',
         # 'valve': '',
-        # 'report': '',
+        'report': '',
     }
 elif component == 'lv':
     runs = {

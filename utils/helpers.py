@@ -9,12 +9,7 @@ working_dir = Path(os.path.join(this_directory, '..'))
 
 from utils.settings import verbose
 
-if sys.platform == "darwin":
-    conda_envs = Path(os.environ['CONDA_PREFIX']).parent
-elif sys.platform == "win32":
-    conda_envs = Path(os.environ['CONDA_PREFIX']).parent
-else:
-    conda_envs = Path("/home/amir/miniconda3/envs")
+conda_envs = Path(os.environ['CONDA_PREFIX']).parents[0]
     
 def run(env_path, script, args):
     if sys.platform == 'win32':
