@@ -21,7 +21,7 @@ image and corresponding label, for example:
 
 |-------labels\
 |---------- segmented1.nrrd\
-|---------- segmented2.nrrd\
+|---------- segmented2.nrrd
 
 Note:
 > results will be saved within data/cardiovision_results directory which will be created after successfull\
