@@ -13,7 +13,7 @@ conda activate cnn
 conda install tensorflow-gpu=1.14 -y
 conda install keras=2 -y
 conda install -c simpleitk simpleitk -y
-conda deactiva
+conda deactivate
 
 # setting up cleanup environment
 eval "$(conda shell.bash hook)"
