@@ -10,7 +10,6 @@ WORKDIR /home/tmp
 
 WORKDIR /home/app
 
-COPY * .
+COPY /. .
 
-# Activate anaconda
-CMD ["eval", "$(conda shell.bash hook)"]
+# ENTRYPOINT ["eval", "'$(conda shell.bash hook)'"]

@@ -1,13 +1,13 @@
 # cardiovision
 
-Install zsh shell using (for mac, skip this step):
-- sudo apt install zsh
+## Intall
 
-Make sure miniconda or anaconda is installed:
-- https://docs.conda.io/en/latest/miniconda.html
+docker build -t cardiovision_image .
+docker run -d -t -v /home/amir/projects/data:/home/data --name cardiovision_container cardiovision_image
+docker exec -it cardiovision_container /bin/sh
+<!-- eval "$(conda shell.bash hook)" -->
 
-Navigate to the main directory "cardiovision/" and make the setup.sh executable:
-- chmod u+x setup.sh
-
-Run the setup.sh script to install the required environments:
-- ./setup.sh
+## Uninstall
+docker stop cardiovision_container
+docker rm cardiovision_container
+docker rmi cardiovision_image
