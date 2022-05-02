@@ -1,8 +1,8 @@
 # cardiovision $v1$
 
 ## Prequisites
-Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker\
-Only one windows: Install WSL2: https://docs.microsoft.com/en-us/windows/wsl/install
+- Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
+- Only one windows: Install WSL2: https://docs.microsoft.com/en-us/windows/wsl/install
 
 ## Preparing data for training and prediction
 replace "/home/amir/projects/data" in line 3 of "installing Cardiovision" section with the folder where\
@@ -16,7 +16,7 @@ image and corresponding label, for example:
 |--data\
 |-------images\
 |---------- ct01.nrrd\
-|---------- ct02.nrrd\
+|---------- ct02.nrrd
 >>...
 
 |-------labels\
