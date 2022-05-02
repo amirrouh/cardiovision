@@ -8,10 +8,8 @@ sys.path.append(working_dir)
 component = 'aorta'
 verbose = True
 
-# data_dir = "/mnt/d/cloud/OneDrive - Mass General Brigham/projects/data"
-
 if component == 'aorta':
-    input_file = '/home/amir/aorta_segmentations/images/ct0.nrrd'
+    input_file = '/home/data/aorta_segmentations/images/ct0.nrrd'
 elif component == 'lv':
-    input_file = '/home/amir/lv_segmentations/images/case1_ct.nrrd'
-output_dir =  f'/home/amir/cardiovision_results/{component}'
+    input_file = '/home/data/lv_segmentations/images/case1_ct.nrrd'
+output_dir =  f'/home/data/cardiovision_results/{component}'
