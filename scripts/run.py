@@ -19,11 +19,11 @@ excludes = [
     FileFolders.folders['cnn']['shared'],
 ]
 
-Functions.refresh(excludes)
+Functions.refresh()
 
 if component == 'aorta':
     runs = {
-        # 'cnn': '-predict',
+        'cnn': '-predict',
         'landmark': '',
         'valve': '',
         'report': '',
