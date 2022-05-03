@@ -1,3 +1,4 @@
+#!/bin/bash
 # Create the required environments
 # cardiovision (main env to control the other envs)
 eval "$(conda shell.bash hook)"
@@ -15,7 +16,7 @@ conda install keras=2 -y
 conda install -c simpleitk simpleitk -y
 conda deactivate
 
-# setting up cleanup environment
+# setting up cleanupjenvironment
 eval "$(conda shell.bash hook)"
 conda create --name cleanup python=3.8 -y
 conda activate cleanup

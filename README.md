@@ -23,18 +23,27 @@ image and corresponding label, for example:
 |---------- segmented1.nrrd\
 |---------- segmented2.nrrd
 
-Note:
-> results will be saved within data/cardiovision_results directory which will be created after successfull\
+### Note:
+Results will be saved within data/cardiovision_results directory which will be created after successfull\
 running of the cardiovision package.
 
 ## Installing Cardiovision
-navigate to the main directory of "cardiovision"\
-docker build -t cardiovision_image .\
-docker run -d -t -v /home/amir/projects/data:/home/data --name cardiovision_container cardiovision_image\
-docker exec -it cardiovision_container /bin/bash\
-eval "$(conda shell.bash hook)"
+### 1- navigate to the main directory of "cardiovision"
+
+>docker build -t cardiovision_image .\
+>docker run -d -t -v /home/amir/data:/home/data --name cardiovision_container cardiovision_image /bin/bash\
+>docker exec -it cardiovision_container /bin/bash
+
+### 2- run the following commands
+
+>eval "$(conda shell.bash hook)"\
+>chmod +x bash_script.sh\
+>. /root/miniconda3/etc/profile.d/conda.sh
+>./bash_script.sh
+
 
 ## Uninstalling Cardiovision
-docker stop cardiovision_container\
-docker rm cardiovision_container\
-docker rmi cardiovision_image
+exit the container using "exit" command. When you are back in the host terminal:
+>docker stop cardiovision_container\
+>docker rm cardiovision_container\
+>docker rmi cardiovision_image

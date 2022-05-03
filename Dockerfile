@@ -1,26 +1,30 @@
+
+
 # Setup ubuntu with Nvidia cuda support
 FROM nvidia/cuda:11.4.2-base-ubuntu20.04
-RUN apt -y update
+
+# Install base utilities
+RUN apt update && \
+    apt upgrade -y && \
+    apt install -y build-essential  && \
+    apt install -y wget && \
+    apt install -y vim && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Installing conda toolkit to enable GPU
 RUN DEBIAN_FRONTEND=noninteractive apt -yq install git nano libtiff-dev cuda-toolkit-11-4
 
 # settings
 ENV AM_I_IN_A_DOCKER_CONTAINER Yes
 
 # Install miniconda
-ENV PATH="/root/miniconda3/bin:${PATH}"
-ARG PATH="/root/miniconda3/bin:${PATH}"
-RUN apt-get update
-RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
-RUN wget \
-    https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
-    && mkdir /root/.conda \
-    && bash Miniconda3-latest-Linux-x86_64.sh -b \
-    && rm -f Miniconda3-latest-Linux-x86_64.sh 
+ENV CONDA_DIR /opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+     /bin/bash ~/miniconda.sh -b -p /opt/conda
 
-# Setting up the environments
-COPY bash_script.sh .
-RUN chmod +x bash_script.sh
-RUN sh ./bash_script.sh
+# Put conda in path so we can use conda activate
+ENV PATH=$CONDA_DIR/bin:$PATH
 
 # preparing the working directory
 WORKDIR /home/app
