@@ -5,9 +5,6 @@
 - Only one windows: Install WSL2: https://docs.microsoft.com/en-us/windows/wsl/install
 
 ## Preparing data for training and prediction
-replace "/home/amir/projects/data" in line 3 of "installing Cardiovision" section with the folder where\
-data (for training or prediction) exist.
-
 data directory structure should be similar to the followings where "images" directory contains the nrrd\
 files of the raw images and "labels" directory contains the nrrd files of the segmented images. Both\
 images and labels nrrd files should have at least one numeric character to show relation between each\
@@ -34,16 +31,21 @@ running of the cardiovision package.
 >docker run -d -t -v /home/amir/data:/home/data --name cardiovision_container cardiovision_image /bin/bash\
 >docker exec -it cardiovision_container /bin/bash
 
-### 2- run the following commands
-
->eval "$(conda shell.bash hook)"\
->chmod +x bash_script.sh\
->. /root/miniconda3/etc/profile.d/conda.sh
->./bash_script.sh
-
 
 ## Uninstalling Cardiovision
 exit the container using "exit" command. When you are back in the host terminal:
 >docker stop cardiovision_container\
 >docker rm cardiovision_container\
 >docker rmi cardiovision_image
+
+## User Manual
+
+### Settings.py
+This file contains all the user inputs:
+- component (str): can be "aorta" or "lv" --> name of component to be automatically reconstructed
+- verbose: can be "True" or "False" --> whether to shows errors/warnings
+- input_file (str) --> full path to raw patient nrrd file to be processed
+- output_dir (str) --> where the reports will be saved
+
+### scripts/run.py
+This is the main file to run the automatic reconstruction

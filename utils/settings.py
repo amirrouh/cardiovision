@@ -6,7 +6,7 @@ working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
 component = 'aorta'
-verbose = False
+verbose = True
 
 SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
@@ -19,7 +19,7 @@ if SECRET_KEY:
 
 else:
     if component == 'aorta':
-        input_file = f'/home/amir/projects/data/aorta_segmentations/images/ct0.nrrd'
+        input_file = f'/home/amir/data/aorta_segmentations/images/ct0.nrrd'
     elif component == 'lv':
-        input_file = f'/home/amir/projects/data/lv_segmentations/images/case1_ct.nrrd'
-    output_dir =  f'/home/amir/projects/data/cardiovision_results/{component}'
+        input_file = f'/home/amir/data/lv_segmentations/images/case1_ct.nrrd'
+    output_dir =  f'/home/amir/data/cardiovision_results/{component}'

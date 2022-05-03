@@ -13,7 +13,7 @@ RUN apt update && \
 RUN apt -y update
 RUN DEBIAN_FRONTEND=noninteractive apt -yq install git nano libtiff-dev cuda-toolkit-11-4
 
-# settings
+# Settings
 ENV AM_I_IN_A_DOCKER_CONTAINER Yes
 
 # Install miniconda
@@ -24,8 +24,13 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 # Put conda in path so we can use conda activate
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-# preparing the working directory
+# Prepare the working directory
 WORKDIR /home/app
 
-# copying project code to the container
+# Copy project code to the container
 COPY /. .
+
+# Install conda environments
+RUN chmod u+x bash_script.sh && \
+    sed -i -e 's/\r$//' bash_script.sh &&\
+    ./bash_script.sh
