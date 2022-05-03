@@ -6,7 +6,7 @@ working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
 component = 'aorta'
-verbose = True
+verbose = False
 
 SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 

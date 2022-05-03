@@ -31,10 +31,6 @@ def run_module(env, args=""):
     script = working_dir / f"{env}/scripts/run.py"
     
     run(env_path, script, args)
-
-    print(env_path)
-    print(script)
-
     report = working_dir / env / 'shared'
     shared_files = list(report.glob('*'))
     if len(shared_files) >= 1:
