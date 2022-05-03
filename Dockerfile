@@ -3,6 +3,9 @@ FROM nvidia/cuda:11.4.2-base-ubuntu20.04
 RUN apt -y update
 RUN DEBIAN_FRONTEND=noninteractive apt -yq install git nano libtiff-dev cuda-toolkit-11-4
 
+# settings
+ENV AM_I_IN_A_DOCKER_CONTAINER Yes
+
 # Install miniconda
 ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"

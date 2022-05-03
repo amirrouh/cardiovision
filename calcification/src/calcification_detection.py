@@ -1,16 +1,19 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Apr 13 14:36:39 2022
+import sys
+import os
 
-@author: rz445
-"""
-# %matplotlib auto
-#%matplotlib inline
 import numpy as np
 import SimpleITK as sitk
 from scipy.ndimage import zoom,center_of_mass,label
-from geometry_tools import create_stl, ply_to_leaflet
-from masking import make_aortic_root_mask
+
+this_directory = os.path.abspath(os.path.dirname(__file__))
+working_dir = os.path.join(this_directory, '..')
+sys.path.append(working_dir)
+
+from utils.settings import input_file
+from utils.io import FileFolders
+
+from calcification.src.geometry_tools import create_stl, ply_to_leaflet
+from calcification.src.masking import make_aortic_root_mask
        
 def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_path_3,\
                           calcs_path_nrrd,calcs_path_stl,*argv):
@@ -135,33 +138,6 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
         create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
     
     return
-
-mask_path="C:\\Users\\RZ445\\Downloads\\mask0.nrrd"
-raw_path="C:\\Users\\RZ445\\Downloads\\ct0.nrrd"
-
-valve_path_1="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\L_complete_cusp.ply"
-valve_path_2="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\R_complete_cusp.ply"
-valve_path_3="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\NC_complete_cusp.ply"
-
-valve_path_1_stl="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\L_complete_cusp.stl"
-valve_path_2_stl="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\R_complete_cusp.stl"
-valve_path_3_stl="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\NC_complete_cusp.stl"
-
-aortic_root_mask_path_nrrd="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\mask.nrrd"
-aortic_root_mask_path_stl="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\mask.stl"
-
-calcs_path_nrrd="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\calcs.nrrd"
-calcs_path_stl="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\calcs.stl"
-calcs_path_nrrd_corr="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\calcs_corr.nrrd"
-calcs_path_stl_corr="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\calcs_corr.stl"
-
-aortic_root_mask_path_nrrd="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\mask.nrrd"
-aortic_root_mask_path_stl="C:\\Users\\RZ445\\Downloads\\temp\\valve_cusps\\mask.stl"
-
-detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_path_3,calcs_path_nrrd,calcs_path_stl,calcs_path_nrrd_corr,calcs_path_stl_corr,aortic_root_mask_path_nrrd,aortic_root_mask_path_stl)
-# detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_path_3,calcs_path_nrrd,calcs_path_stl)
-
-    
 
 
 

@@ -8,8 +8,18 @@ sys.path.append(working_dir)
 component = 'aorta'
 verbose = True
 
-if component == 'aorta':
-    input_file = '/home/data/aorta_segmentations/images/ct0.nrrd'
-elif component == 'lv':
-    input_file = '/home/data/lv_segmentations/images/case1_ct.nrrd'
-output_dir =  f'/home/data/cardiovision_results/{component}'
+SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
+
+if SECRET_KEY:
+    if component == 'aorta':
+        input_file = f'/home/data/aorta_segmentations/images/ct0.nrrd'
+    elif component == 'lv':
+        input_file = f'/home/data/lv_segmentations/images/case1_ct.nrrd'
+    output_dir =  f'/home/data/cardiovision_results/{component}'
+
+else:
+    if component == 'aorta':
+        input_file = f'/home/amir/projects/data/aorta_segmentations/images/ct0.nrrd'
+    elif component == 'lv':
+        input_file = f'/home/amir/projects/data/lv_segmentations/images/case1_ct.nrrd'
+    output_dir =  f'/home/amir/projects/data/cardiovision_results/{component}'

@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 28 15:58:26 2022
-
-@author: rz445
-"""
+import sys
+import os
 
 import numpy as np
 import math
@@ -11,8 +7,12 @@ import SimpleITK as sitk
 from scipy.ndimage import binary_fill_holes
 from skimage.measure import perimeter
 from skimage.morphology import binary_closing, disk
-from geometry_tools import create_stl
 
+this_directory = os.path.abspath(os.path.dirname(__file__))
+working_dir = os.path.join(this_directory, '..')
+sys.path.append(working_dir)
+
+from calcification.src.geometry_tools import create_stl
 
 
 def make_aortic_root_mask(valve,mask_arr,*argv):

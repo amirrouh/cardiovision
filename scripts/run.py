@@ -14,20 +14,23 @@ from utils.helpers import run_module
 from utils.io import FileFolders
 from utils.settings import component, output_dir
 
+# Folders to keep intact during cleaning up the previous run
 excludes = [
     FileFolders.folders['global']['shared'],
     FileFolders.folders['cnn']['shared'],
 ]
 
-Functions.refresh()
+Functions.refresh(exclude=excludes)
 
 if component == 'aorta':
     runs = {
-        'cnn': '-predict',
-        'landmark': '',
-        'valve': '',
-        'report': '',
+        # 'cnn': '-predict',
+        # 'landmark': '',
+        # 'valve': '',
+        'calcification': '',
+        # 'report': '',
     }
+
 elif component == 'lv':
     runs = {
         'cnn': '-predict',

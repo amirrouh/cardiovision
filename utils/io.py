@@ -44,6 +44,9 @@ class FileFolders:
             'shell': working_dir / 'valve' / 'shared' / 'temp' / 'shell',
             'pointcloud': working_dir / 'valve' / 'shared' / 'temp' / 'pointcloud',
             'final': working_dir / 'valve' / 'shared' / 'temp' / 'final',
+        },
+        'calcification': {
+            'calcification_shared': working_dir / 'calcification' / 'shared',
         }
     }
     
@@ -52,7 +55,8 @@ class FileFolders:
             
         },
         'cnn': { 
-            'aorta_stl': working_dir / 'shared' / 'predicted.stl'
+            'aorta_stl': working_dir / 'shared' / 'predicted.stl',
+            'predicted_label': working_dir / 'shared' / 'predicted_smoothed.nrrd'
         },
         'landmark': {
             'log_file': working_dir/'landmark'/'shared'/'temp'/'landmark_detection.log',
@@ -64,7 +68,25 @@ class FileFolders:
             'image_nrrd': working_dir/'landmark'/'shared'/'image.nrrd',
         },
         'valve': {
-            
+            'L_cusp': working_dir/'shared'/'valve_cusps'/'L_complete_cusp.ply',
+            'R_cusp': working_dir/'shared'/'valve_cusps'/'R_complete_cusp.ply',
+            'N_cusp': working_dir/'shared'/'valve_cusps'/'NC_complete_cusp.ply',
+            'L_cusp_stl': working_dir/'shared'/'valve_cusps'/'L_complete_cusp_stl.stl',
+            'R_cusp_stl': working_dir/'shared'/'valve_cusps'/'R_complete_cusp_stl.stl',
+            'N_cusp_stl': working_dir/'shared'/'valve_cusps'/'NC_complete_cusp_stl.stl',
+
+            },
+        'calcification': {
+            'aortic_root_mask_path_nrrd': working_dir/'calcification'/'shared'/'mask.nrrd',
+            'aortic_root_mask_path_stl': working_dir/'calcification'/'shared'/'mask.stl',
+
+            'calcs_path_nrrd':working_dir/'calcification'/'shared'/'calcs.nrrd',
+            'calcs_path_stl':working_dir/'calcification'/'shared'/'calcs.stl',
+            'calcs_path_nrrd_corr':working_dir/'calcification'/'shared'/'calcs_corr.nrrd',
+            'calcs_path_stl_corr':working_dir/'calcification'/'shared'/'calcs_corr.stl',
+
+            'aortic_root_mask_path_nrrd':working_dir/'calcification'/'shared'/'mask.nrrd',
+            'aortic_root_mask_path_stl':working_dir/'calcification'/'shared'/'mask.stl',
             },
     }
     
