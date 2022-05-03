@@ -49,3 +49,6 @@ This file contains all the user inputs:
 
 ### scripts/run.py
 This is the main file to run the automatic reconstruction
+>eval "$(conda shell.bash hook)"
+>conda activate cardiovision
+>python scripts/run.py
