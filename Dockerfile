@@ -34,3 +34,7 @@ COPY /. .
 RUN chmod u+x bash_script.sh && \
     sed -i -e 's/\r$//' bash_script.sh &&\
     ./bash_script.sh
+
+# run cardiovision
+RUN chmod u+x scripts/run.sh && \
+    sed -i -e 's/\r$//' scripts/run.sh
