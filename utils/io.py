@@ -87,6 +87,8 @@ class FileFolders:
 
             'aortic_root_mask_path_nrrd':working_dir/'calcification'/'shared'/'mask.nrrd',
             'aortic_root_mask_path_stl':working_dir/'calcification'/'shared'/'mask.stl',
+
+            'calcs_path_nrrd_corr': working_dir/'calcification'/'shared'/'calcs_path_nrrd_corr.nrrd',
             },
     }
     

@@ -14,9 +14,11 @@ from utils.io import FileFolders
 
 from calcification.src.geometry_tools import create_stl, ply_to_leaflet
 from calcification.src.masking import make_aortic_root_mask
+
        
 def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_path_3,\
-                          calcs_path_nrrd,calcs_path_stl,*argv):
+                          calcs_path_nrrd,calcs_path_stl,calcs_path_nrrd_corr,calcs_path_stl_corr,\
+                              aortic_root_mask_path_nrrd,aortic_root_mask_path_stl):
     
     """Creates .nrrd and .stl of calcifications and performs an optional operation
     to correct the positioning of the calcifications so that the center of mass of
@@ -38,19 +40,17 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     :param calcs_path_stl: .stl directory for unadjusted calcifications
     :type calcs_path_stl: string
     
-    argv*
-    :param arg[0]: .nrrd directory for corrected calcifications
-    :type arg[0]: string
-    :param arg[1]: .stl directory for corrected calcifications
-    :type arg[1]: string
-    :param arg[2]: .nrrd directory for aortic root mask
-    :type arg[2]: string
-    :param arg[3]: .stl directory for aortic root mask
-    :type arg[3]: string
+    :param calcs_path_nrrd_corr: .nrrd directory for corrected calcifications
+    :type calcs_path_nrrd_corr: string
+    :param calcs_path_stl_corr: .stl directory for corrected calcifications
+    :type calcs_path_stl_corr: string
+    :param aortic_root_mask_path_nrrd: .nrrd directory for aortic root mask
+    :type aortic_root_mask_path_nrrd: string
+    :param aortic_root_mask_path_stl: .stl directory for aortic root mask
+    :type aortic_root_mask_path_stl: string
 
-    """
-    if len(argv)>0 and len(argv)!=4: 
-        raise ValueError("Either 7 or 11 arguments are needed")
+    """  
+    
     
     calc_thresh=500 #Lower threshold for calcificiation
     multi_factor=10 #Factpr used to interpolate .ply and .nrrd
@@ -102,42 +102,40 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     sitk.WriteImage(calcs_info,calcs_path_nrrd) #Write .nrrd image
     create_stl(calcs_path_nrrd,calcs_path_stl) #create stl of processed image
     
-    if len(argv)==4: #Options to save the .nrrd and .STL
     
-        calcs_corrected=np.zeros(np.shape(calcs))
-        blank_arr=np.zeros(np.shape(calcs))
-        for calc_label in range(1,cal_num): #Important not to do background of zero
-            
-            calc_org = np.where(calc_labels == calc_label, 1, 0) #Calcification isolated
-            #Centre of Mass (COM) of calcification
-            com_idx=center_of_mass(calc_org) 
-            com=np.copy(blank_arr)
-            #Single element added to blank array which represents COM
-            com[round(com_idx[0]),round(com_idx[1]),round(com_idx[2])]=1
+    calcs_corrected=np.zeros(np.shape(calcs))
+    blank_arr=np.zeros(np.shape(calcs))
+    for calc_label in range(1,cal_num): #Important not to do background of zero
         
-            #Determine if COM of calc is inside mask
-            com_status=np.max(np.logical_and(com,valve_mask)) 
-            
-            if com_status==False: #When calcification COM is outside of the mask
-                #Append unedited calcification. This one does not need to be altered
-                calcs_corrected=calcs_corrected+calc_org
-            else: #When calcification COM is inside of the mask
-                #COM z coordinate
-                com_z_idx=int(np.where(com[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)[0])
-                #Average z coordinate of valve directly above/below COM of calcification
-                valve_z_idx=int(round(np.mean(np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1))))
-                #Distance in Z direction between calc COM and valve
-                distance=int(valve_z_idx-com_z_idx)
-                #Append calcification
-                calcs_corrected=calcs_corrected+np.roll(calc_org,distance,axis=0)
-                    
-        #Create stl and nrrd of corrected calcs
-        calcs_info_corr = sitk.GetImageFromArray(calcs_corrected) #Convert image to sitk recognized image
-        calcs_info_corr.CopyInformation(raw) #Copy image data info from original nrrd
-        sitk.WriteImage(calcs_info_corr,calcs_path_nrrd_corr) #Write .nrrd image
-        create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
+        calc_org = np.where(calc_labels == calc_label, 1, 0) #Calcification isolated
+        #Centre of Mass (COM) of calcification
+        com_idx=center_of_mass(calc_org) 
+        com=np.copy(blank_arr)
+        #Single element added to blank array which represents COM
+        com[round(com_idx[0]),round(com_idx[1]),round(com_idx[2])]=1
+    
+        #Determine if COM of calc is inside mask
+        com_status=np.max(np.logical_and(com,valve_mask)) 
+        
+        if com_status==False: #When calcification COM is outside of the mask
+            #Append unedited calcification. This one does not need to be altered
+            calcs_corrected=calcs_corrected+calc_org
+        else: #When calcification COM is inside of the mask
+            #COM z coordinate
+            com_z_idx=int(np.where(com[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)[0])
+            #Average z coordinate of valve directly above/below COM of calcification
+            valve_z_idx=int(round(np.mean(np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1))))
+            #Distance in Z direction between calc COM and valve
+            distance=int(valve_z_idx-com_z_idx)
+            #Append calcification
+            calcs_corrected=calcs_corrected+np.roll(calc_org,distance,axis=0)
+                
+    #Create stl and nrrd of corrected calcs
+    calcs_info_corr = sitk.GetImageFromArray(calcs_corrected) #Convert image to sitk recognized image
+    calcs_info_corr.CopyInformation(raw) #Copy image data info from original nrrd
+    sitk.WriteImage(calcs_info_corr,calcs_path_nrrd_corr) #Write .nrrd image
+    create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
     
     return
-
 
 

@@ -1,5 +1,3 @@
-#!/bin/bash
-
-source /opt/conda/etc/profile.d/conda.sh
+eval "$(conda shell.bash hook)"
 conda activate cardiovision
-python run.py
+python scripts/run.py
