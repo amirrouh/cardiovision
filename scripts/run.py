@@ -24,9 +24,9 @@ Functions.refresh(exclude=excludes)
 
 if component == 'aorta':
     runs = {
-        'cnn': '-predict',
-        'landmark': '',
-        'valve': '',
+        # 'cnn': '-predict',
+        # 'landmark': '',
+        # 'valve': '',
         'calcification': '',
         # 'report': '',
     }
