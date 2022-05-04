@@ -46,6 +46,6 @@ exit the container using "exit" command. When you are back in the host terminal:
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -p
 
 ### Example:
->docker run -d -t --name cv_container -v /mnt/amir/Documents:/home/data cv_image\
+>docker run -d -t --name cv_container -v /mnt/c/Users/amir/Documents:/home/data cv_image\
 >docker cp /home/amir/data/aorta_segmentations/images/ct0.nrrd cv_container:/home/data/input_file.nrrd\
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -p
