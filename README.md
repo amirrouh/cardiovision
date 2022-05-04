@@ -41,6 +41,6 @@ exit the container using "exit" command. When you are back in the host terminal:
 ## User Manual
 
 ### RUN
->docker run -d -t cv_container cv_image
->docker cp input_file_path cv_container:/home/data/input_file.nrrd
+>docker run -d -t cv_container -v <output_directory>:/home/data cv_image\
+>docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
 >docker run cv_container -p -v
