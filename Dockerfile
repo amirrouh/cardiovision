@@ -30,5 +30,10 @@ WORKDIR /home/app
 # copying project code to the container
 COPY /. .
 
-RUN chmod u+x scripts/cardiovision.sh
-ENTRYPOINT [ "/home/app/scripts/cardiovision.sh" ]
+RUN sed -e "s/\r//g" scripts/cardiovision.sh && \
+    chmod u+x scripts/cardiovision.sh && \
+    sed -e "s/\r//g" bash_script.sh && \
+    chmod u+x bash_script.sh && \
+    ./bash_script.sh
+
+ENTRYPOINT [ "scripts/cardiovision.sh" ]

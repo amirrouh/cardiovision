@@ -28,7 +28,7 @@ if component == 'aorta':
         'landmark': '',
         'valve': '',
         'calcification': '',
-        # 'report': '',
+        'report': '',
     }
 
 elif component == 'lv':
