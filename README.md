@@ -2,7 +2,7 @@
 
 ## Prequisites
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
-- Only one windows: Install WSL2: https://docs.microsoft.com/en-us/windows/wsl/install
+- Only on windows: Install WSL2: https://docs.microsoft.com/en-us/windows/wsl/install
 
 ## Preparing data for training and prediction
 data directory structure should be similar to the followings where "images" directory contains the nrrd\
@@ -44,3 +44,8 @@ exit the container using "exit" command. When you are back in the host terminal:
 >docker run -d -t cv_container -v <output_directory>:/home/data cv_image\
 >docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
 >docker run cv_container -p -v
+
+example:
+docker run -d -t cv_container -v /mnt/amir/Documents:/home/data cv_image\
+docker cp /home/amir/data/aorta_segmentations/images/ct0.nrrd cv_container:/home/data/input_file.nrrd\
+docker run cv_container -p -v
