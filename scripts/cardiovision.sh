@@ -5,7 +5,6 @@ case $1 in
     eval "$(conda shell.bash hook)"
     conda activate cardiovision
     python scripts/generate_settings.py $2
-    echo here
     python scripts/run.py
     ;;
     *)
