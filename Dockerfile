@@ -3,7 +3,6 @@ FROM nvidia/cuda:11.4.2-base-ubuntu20.04
 
 # Install base utilities
 RUN apt update && \
-    apt upgrade -y && \
     apt install -y build-essential  && \
     apt install -y wget && \
     apt install -y vim && \
@@ -11,6 +10,7 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # Installing conda toolkit to enable GPU
+RUN apt -y update
 RUN DEBIAN_FRONTEND=noninteractive apt -yq install git nano libtiff-dev cuda-toolkit-11-4
 
 # settings
@@ -30,5 +30,5 @@ WORKDIR /home/app
 # copying project code to the container
 COPY /. .
 
-
-ENTRYPOINT [ "scripts/run.sh" ]
+RUN chmod u+x scripts/cardiovision.sh
+ENTRYPOINT [ "/home/app/scripts/cardiovision.sh" ]
