@@ -21,34 +21,26 @@ image and corresponding label, for example:
 |---------- segmented2.nrrd
 
 ### Note:
-Results will be saved within data/cardiovision_results directory which will be created after successfull\
+Results will be saved within data/cv_results directory which will be created after successfull\
 running of the cardiovision package.
 
 ## Installing Cardiovision
 ### 1- navigate to the main directory of "cardiovision"
 
->docker build -t cardiovision_image .\
->docker run -d -t -v /home/amir/data:/home/data --name cardiovision_container cardiovision_image /bin/bash\
->docker exec -it cardiovision_container /bin/bash
+>docker build -t cv_image .\
+>docker run -d -t -v /home/amir/data:/home/data --name cv_container cv_image /bin/bash\
+>docker exec -it cv_container /bin/bash
 
 
 ## Uninstalling Cardiovision
 exit the container using "exit" command. When you are back in the host terminal:
->docker stop cardiovision_container\
->docker rm cardiovision_container\
->docker rmi cardiovision_image
+>docker stop cv_container\
+>docker rm cv_container\
+>docker rmi cv_image
 
 ## User Manual
 
-### Settings.py
-This file contains all the user inputs:
-- component (str): can be "aorta" or "lv" --> name of component to be automatically reconstructed
-- verbose: can be "True" or "False" --> whether to shows errors/warnings
-- input_file (str) --> full path to raw patient nrrd file to be processed
-- output_dir (str) --> where the reports will be saved
-
-### scripts/run.py
-This is the main file to run the automatic reconstruction
->eval "$(conda shell.bash hook)"\
->conda activate cardiovision\
->python scripts/run.py
+### RUN
+>docker run -d -t cv_container cv_image
+>docker cp input_file_path cv_container:/home/data/input_file.nrrd
+>docker run cv_container -p -v

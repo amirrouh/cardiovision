@@ -36,4 +36,4 @@ RUN sed -e "s/\r//g" scripts/cardiovision.sh && \
     chmod u+x bash_script.sh && \
     ./bash_script.sh
 
-ENTRYPOINT [ "scripts/cardiovision.sh" ]
+RUN mkdir /home/data
