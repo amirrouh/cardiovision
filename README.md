@@ -41,11 +41,11 @@ exit the container using "exit" command. When you are back in the host terminal:
 ## User Manual
 
 ### RUN
->docker run -d -t cv_container -v <output_directory>:/home/data cv_image\
+>docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image\
 >docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
->docker run cv_container -p -v
+>docker exec cv_container bash /home/app/scripts/cardiovision.sh -p
 
 ### Example:
->docker run -d -t cv_container -v /mnt/amir/Documents:/home/data cv_image\
+>docker run -d -t --name cv_container -v /mnt/amir/Documents:/home/data cv_image\
 >docker cp /home/amir/data/aorta_segmentations/images/ct0.nrrd cv_container:/home/data/input_file.nrrd\
->docker run cv_container -p -v
+>docker exec cv_container bash /home/app/scripts/cardiovision.sh -p

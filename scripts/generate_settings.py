@@ -6,9 +6,6 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
-print(args)
-
-print('aMIRRRRRRRRRRRRRRRR')
 
 input_file = "/home/data/input_file.nrrd"
 

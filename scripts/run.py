@@ -20,7 +20,8 @@ excludes = [
     FileFolders.folders['cnn']['shared'],
 ]
 
-# Functions.refresh(exclude=excludes)
+# add excludes if you want to keep the excludes folders intact
+Functions.refresh()
 
 if component == 'aorta':
     runs = {
