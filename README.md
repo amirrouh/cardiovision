@@ -10,11 +10,11 @@ Both images and labels should be 512*512 slides saved as nrrd file:\
     * images
         * ct01.nrrd
         * ct02.nrrd
-        * $ ... $
+        * ...
     * labels
         * segmented1.nrrd
         * segmented2.nrrd
-        * $ ... $
+        * ...
 
 ## RUN Cardiovision
 In the main directory, run the following commands:
