@@ -80,31 +80,23 @@ def cleanup_geometry(input_path_nrrd, output_path_nrrd, output_path_STL):
     threshold=0.5 #Threshold value. Anything below will be background
     binary_mask=np.where(raw_arr>threshold, 1, 0) #Convert to binary array
     
-    
-    #The closing filter will erode the edges of an object if the background is zeros
-    #So we are going to add a few slices of ones to the top and bottom of the image
-    #We will then perform the closing/median filter and remove this artificial slices at the end
-    #There is a little bit of erosion on the sides, but this is minimal
-    
-    ones_slice=np.ones((5,np.shape(binary_mask)[1],np.shape(binary_mask)[2]),dtype=bool) #filled slices
-    #Add to top and bottom
-    binary_mask=np.vstack((binary_mask, ones_slice)) 
-    binary_mask=np.vstack((ones_slice,binary_mask))
-    
-    closing_size=5
     #Remove some of the small holes in the image
-    binary_mask=ndimage.binary_closing(binary_mask,structure=np.ones((closing_size,closing_size,closing_size)))
+    #Scans through slices in 2D on two different axes to remove holes
+    for img_slice in range(np.shape(binary_mask)[0]):
+        binary_mask[img_slice,:,:]=ndimage.binary_fill_holes(binary_mask[img_slice,:,:])
+    for img_slice in range(np.shape(binary_mask)[2]):
+        binary_mask[:,:,img_slice]=ndimage.binary_fill_holes(binary_mask[:,:,img_slice])
     
     #Apply a median filter to the image
     img=filters.median(binary_mask,ball(5))
     
-    #Remove virtual slices that were added to avoid erosion
-    img=img[:-closing_size, :,:] #first n slices
-    img=img[closing_size:, :,:] #last n slices
-    
-    #Make top layer blank. This enables marching cubes operation in vtk to work
+    #Make edge layers blank. This enables marching cubes operation in vtk to work
     img[0,:,:]=np.zeros((1,np.shape(binary_mask)[1],np.shape(binary_mask)[2]),dtype=bool) #filled slices
     img[-1,:,:]=np.zeros((1,np.shape(binary_mask)[1],np.shape(binary_mask)[2]),dtype=bool) #filled slices
+    img[:,0,:]=np.zeros((1,np.shape(binary_mask)[0],np.shape(binary_mask)[2]),dtype=bool) #filled slices
+    img[:,-1,:]=np.zeros((1,np.shape(binary_mask)[0],np.shape(binary_mask)[2]),dtype=bool) #filled slices
+    img[:,:,0]=np.zeros((1,np.shape(binary_mask)[0],np.shape(binary_mask)[1]),dtype=bool) #filled slices
+    img[:,:,-1]=np.zeros((1,np.shape(binary_mask)[0],np.shape(binary_mask)[1]),dtype=bool) #filled slices
 
     
     #Process to keep only the largest connected component
