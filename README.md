@@ -4,7 +4,7 @@
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
 - The code is tested successfully on windows and linux
 ## Directory Structure For Training
-Both images and labels should be 512*512 slides saved as nrrd file:\
+Both images and labels should be 512*512 slides saved as nrrd file:
 
 * path to trainig data
     * images
@@ -15,6 +15,9 @@ Both images and labels should be 512*512 slides saved as nrrd file:\
         * segmented1.nrrd
         * segmented2.nrrd
         * ...
+
+Note that images and labels have some numeric character to relate the two. You can use any formatting\
+as long as the numbers are the same for corresponding image and label.
 
 ## RUN Cardiovision
 In the main directory, run the following commands:
