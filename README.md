@@ -20,8 +20,11 @@ Note that images and labels have some numeric character to relate the two. You c
 as long as the numbers are the same for corresponding image and label.
 
 ## Note
-To login to the docker container:
+### To login to the docker container:
 >docker exec -it cv_container /bin/bash
+
+### To change prediction component
+>change component variable in "/root/scripts/generate_settings.py" file
 
 ## RUN Cardiovision
 In the main directory, run the following commands:
