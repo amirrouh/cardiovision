@@ -1,4 +1,4 @@
-# cardiovision 0.1
+# cardiovision 0.1 for the 1st time
 
 ## Prequisites
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
