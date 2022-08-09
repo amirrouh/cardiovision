@@ -31,6 +31,16 @@ In the main directory, run the following commands:
 >docker build -t cv_image .\
 >docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image\
 >docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
+
+### train
+- prepare for training
+>docker exec cv_container bash /home/app/scripts/cardiovision.sh -i
+
+- training
+>docker exec cv_container bash /home/app/scripts/cardiovision.sh -t
+
+
+### Predict
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -p
 
 
