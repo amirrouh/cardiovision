@@ -7,6 +7,20 @@ case $1 in
     python scripts/generate_settings.py $2
     python scripts/run.py
     ;;
+    -i) # initialization (resampling and data generation)
+    eval "$(conda shell.bash hook)"
+    conda activate training
+    python scripts/generate_settings.py
+    python cnn/src/preprocess/1_resample.py
+    python cnn/src/preprocess/2_split.py
+    python cnn/src/preprocess/3_datagen.py
+    ;;
+    -t)
+    eval "$(conda shell.bash hook)"
+    conda activate cnn
+    python scripts/generate_settings.py 
+    python cnn/src/train/1_train.py
+    ;;  
     *)
     echo "please use option '-p' for predictions "
 esac

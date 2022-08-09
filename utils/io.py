@@ -22,7 +22,6 @@ class FileFolders:
             'valve_cusps': working_dir / 'shared' / 'valve_cusps',
             'output_dir': Path(settings.output_dir)
         },
-    
         'cnn': {
             'intermediate': working_dir / 'cnn' / 'intermediate',
             'data': working_dir / 'cnn' / 'intermediate' / 'data',

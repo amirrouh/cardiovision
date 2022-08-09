@@ -1,22 +1,34 @@
 import os
 import sys
+from pathlib import Path
 
 import SimpleITK as sitk
 import pandas as pd
 from tqdm import tqdm
 
-sys.path.append('..')
+this_directory = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(this_directory, '..', '..', '..'))
 
-from cnn.initialization.create_folders import images_folder, sheets_folder, Parameters
+from utils.settings import training_dir
+from cnn.src.helpers.utils import resample, pad_crop, Parser
+from utils.io import FileFolders as ff
+from utils.io import Functions
 
-from cnn.helpers.utils import resample, pad_crop, Parser
+
+folders = ff.folders
+
+images_folder = folders['cnn']['images']
+sheets_folder = folders['cnn']['sheets']
+
+# creating required folders for training
+Functions.create()
 
 if __name__ == '__main__':
     image_set = "set_1"
-    cts_dir = Parameters.input_dir/'images'
+    cts_dir = Path(training_dir)/'images'
     cts = list(cts_dir.glob('*.nrrd'))
     cts.sort()
-    lbls_dir = Parameters.input_dir/'labels'
+    lbls_dir = Path(training_dir)/'labels'
     lbls = list(lbls_dir.glob('*.nrrd'))
     lbls.sort()
     output_folder = os.path.join(images_folder, image_set)

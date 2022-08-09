@@ -9,8 +9,15 @@ from tqdm import tqdm
 
 np.random.seed(17)
 
-sys.path.append('..')
-from cnn.initialization.create_folders import sheets_folder, arrays_folder, images_folder
+this_directory = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(this_directory, '..', '..', '..'))
+
+from utils.io import FileFolders as ff
+folders = ff.folders
+
+sheets_folder = folders['cnn']['sheets']
+arrays_folder = folders['cnn']['arrays']
+images_folder = folders['cnn']['images']
 
 n_classes = 2
 if __name__ == '__main__':
@@ -75,10 +82,10 @@ if __name__ == '__main__':
                 np.save(os.path.join(output_fold_folder, 'X_' + data_type + '.npy'), X)
                 np.save(os.path.join(output_fold_folder, 'y_' + data_type + '.npy'), y)
 
-                if data_type == 'train':
-                    import matplotlib.pyplot as plt
-                    fig = plt.figure()
-                    y_concat = np.sum(y[..., 1], axis=0)
-                    plt.imshow(y_concat)
-                    plt.show()
-                    plt.close(fig)
+                # if data_type == 'train':
+                #     import matplotlib.pyplot as plt
+                #     fig = plt.figure()
+                #     y_concat = np.sum(y[..., 1], axis=0)
+                #     plt.imshow(y_concat)
+                #     plt.show()
+                #     plt.close(fig)

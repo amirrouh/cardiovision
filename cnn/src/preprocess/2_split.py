@@ -6,9 +6,14 @@ import pandas as pd
 from sklearn.model_selection import KFold
 from collections import OrderedDict
 
-sys.path.append('../..')
+this_directory = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(this_directory, '..', '..', '..'))
 
-from utils.create_folders import sheets_folder
+from utils.io import FileFolders as ff
+folders = ff.folders
+
+sheets_folder = folders['cnn']['sheets']
+
 
 np.random.seed(17)
 

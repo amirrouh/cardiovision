@@ -11,10 +11,17 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
-sys.path.append('..')
-from cnn.initialization.create_folders import arrays_folder, models_folder
-from cnn.helpers.custom_loss import DiceLoss, LabelDice
-from cnn.helpers.unet import UNet
+this_directory = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(this_directory, '..', '..', '..'))
+
+from utils.io import FileFolders as ff
+folders = ff.folders
+
+models_folder = folders['cnn']['models']
+arrays_folder = folders['cnn']['arrays']
+
+from cnn.src.helpers.custom_loss import DiceLoss, LabelDice
+from cnn.src.helpers.unet import UNet
 
 
 n_classes = 2

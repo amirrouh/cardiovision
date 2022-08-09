@@ -7,10 +7,14 @@ working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
 
-input_file = "/home/data/input_file.nrrd"
+# input_file = "/home/data/input_file.nrrd"
+input_file = "/home/amir/input_file.nrrd"
 
+# training_dir = '"/home/data/training_data"'
+training_dir = '"/home/amir/lv_segmentations"'
 
-output_dir = '"/home/data/cardiovision_results"'
+# output_dir = '"/home/data/cardiovision_results"'
+output_dir = '"/home/amir/cardiovision_results"'
 
 component = '"aorta"'
 
@@ -31,3 +35,4 @@ with open(os.path.join(working_dir, 'utils', 'settings.py'), 'w') as f:
     f.write(f'input_file = "{input_file}"\n')
     f.write(f'output_dir = {output_dir}\n')
     f.write(f'verbose = {verbose}\n')
+    f.write(f'training_dir = {training_dir}\n')
