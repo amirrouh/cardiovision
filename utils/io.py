@@ -161,7 +161,6 @@ class Functions:
         """
         One way sync from source dir to destination dir """
         
-        
         src_files = list(source_dir.rglob('*'))
         src_files_str_relative = [str(i.relative_to(source_dir)) for i in list(src_files)]
         dst_files = list(destination_dir.rglob('*'))

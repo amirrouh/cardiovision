@@ -30,17 +30,21 @@ as long as the numbers are the same for corresponding image and label.
 In the main directory, run the following commands:
 >docker build -t cv_image .\
 >docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image\
->docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
 
-### train
+
+### Train
+- copying training data
+>docker cp <training_data_directory> cv_container:/home/data/training_data
 - prepare for training
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -i
-
 - training
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -t
 
 
 ### Predict
+- copy the target raw nrrd file to predict 
+>docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
+- predict
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -p
 
 

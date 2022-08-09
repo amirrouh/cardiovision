@@ -7,16 +7,13 @@ working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
 
-# input_file = "/home/data/input_file.nrrd"
-input_file = "/home/amir/input_file.nrrd"
+input_file = "/home/data/input_file.nrrd"
 
-# training_dir = '"/home/data/training_data"'
-training_dir = '"/home/amir/lv_segmentations"'
+training_dir = '"/home/data/training_data"'
 
-# output_dir = '"/home/data/cardiovision_results"'
-output_dir = '"/home/amir/cardiovision_results"'
+output_dir = '"/home/data/cardiovision_results"'
 
-component = '"aorta"'
+component = '"lv"'
 
 if '-v' in args:
     verbose = True
