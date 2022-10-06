@@ -28,6 +28,7 @@ as long as the numbers are the same for corresponding image and label.
 
 ### To make the changes permanent
 commit the changes to the docker using the below command:
+
 docker commit cv_container cv_image
 
 ## RUN Cardiovision
