@@ -4,7 +4,7 @@ case $1 in
     -p) # predicting
     eval "$(conda shell.bash hook)"
     conda activate cardiovision
-    python scripts/generate_settings.py $2
+    python scripts/generate_settings.py $2 $3
     python scripts/run.py
     ;;
     -i) # initialization (resampling and data generation)
