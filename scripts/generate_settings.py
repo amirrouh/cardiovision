@@ -13,7 +13,12 @@ training_dir = '"/home/data/training_data"'
 
 output_dir = '"/home/data/cardiovision_results"'
 
-component = '"lv"'
+if "-lv" in args:
+    component = '"lv"'
+elif "-aorta" in args:
+    component = '"aorta"'
+else:
+    print("Please enter the component to be predicted i.e. -lv to predict left venctricle and -aorta to predict the aorta")
 
 if '-v' in args:
     verbose = True
