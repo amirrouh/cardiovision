@@ -48,7 +48,7 @@ In the main directory, run the following commands:
 - copy the target raw nrrd file to predict 
 >docker cp <input_file_path> cv_container:/home/data/input_file.nrrd\
 - predict
->docker exec cv_container bash /home/app/scripts/cardiovision.sh -p
+>docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -lv
 
 
 ## Removing Cardiovision
