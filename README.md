@@ -41,10 +41,8 @@ Navigate to the scripts/main, and run:
 - training
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -t
 
-
 ### Predict
-python cardiovision.py <input_file> <output_dir> <component>
-
+python cardiovision.py <input_nrrd_file_path> <output_dir> <component_to_be_predicted>
 
 ## Removing Cardiovision
 exit the container using "exit" command. When you are back in the host terminal:
