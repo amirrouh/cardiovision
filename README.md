@@ -22,7 +22,7 @@ as long as the numbers are the same for corresponding image and label.
 ## Install Cardiovision
 In the main directory, run the following commands:
 >docker build -t cv_image .\
->docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image\
+>docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image
 
 
 ### Train
