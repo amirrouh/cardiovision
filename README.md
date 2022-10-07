@@ -19,17 +19,7 @@ Both images and labels should be 512*512 slides saved as nrrd file:
 Note that images and labels have some numeric character to relate the two. You can use any formatting\
 as long as the numbers are the same for corresponding image and label.
 
-## Note
-### To login to the docker container:
->docker exec -it cv_container /bin/bash
-
-### To change prediction component
->change component variable in "/root/scripts/generate_settings.py" file
-
-### To make the changes permanent
->docker commit cv_container cv_image
-
-## RUN Cardiovision
+## Install Cardiovision
 In the main directory, run the following commands:
 >docker build -t cv_image .\
 >docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image\
@@ -59,3 +49,13 @@ exit the container using "exit" command. When you are back in the host terminal:
 
 ## Remove all Docker Images/Containers
 >dockers system prune -a
+
+## Note
+### To login to the docker container:
+>docker exec -it cv_container /bin/bash
+
+### To change prediction component
+>change component variable in "/root/scripts/generate_settings.py" file
+
+### To make the changes permanent
+>docker commit cv_container cv_image
