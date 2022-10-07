@@ -19,11 +19,19 @@ Both images and labels should be 512*512 slides saved as nrrd file:
 Note that images and labels have some numeric character to relate the two. You can use any formatting\
 as long as the numbers are the same for corresponding image and label.
 
-## Install Cardiovision
-In the main directory, run the following commands:
->docker build -t cv_image .\
->docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image
+## Note
+### To login to the docker container:
+>docker exec -it cv_container /bin/bash
 
+### To change prediction component
+>change component variable in "/root/scripts/generate_settings.py" file
+
+### To make the changes permanent
+>docker commit cv_container cv_image
+
+## Install Cardiovision
+Navigate to the scripts/main, and run:
+>docker build -t cv_image .
 
 ### Train
 - copying training data
@@ -35,10 +43,7 @@ In the main directory, run the following commands:
 
 
 ### Predict
-- copy the target raw nrrd file to predict 
->docker cp <input_file_path> cv_container:/home/data/input_file.nrrd
-- predict
->docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -lv
+python cardiovision.py <input_file> <output_dir> <component>
 
 
 ## Removing Cardiovision
@@ -49,13 +54,3 @@ exit the container using "exit" command. When you are back in the host terminal:
 
 ## Remove all Docker Images/Containers
 >dockers system prune -a
-
-## Note
-### To login to the docker container:
->docker exec -it cv_container /bin/bash
-
-### To change prediction component
->change component variable in "/root/scripts/generate_settings.py" file
-
-### To make the changes permanent
->docker commit cv_container cv_image
