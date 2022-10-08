@@ -5,3 +5,6 @@ from django.views.generic.base import TemplateView
 
 def gui_home(request):
     return render(request, 'gui/index.html')
+
+def gui_visualization(request):
+    return render(request, 'gui/visualization/index.html')
