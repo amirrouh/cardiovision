@@ -34,6 +34,7 @@ Navigate to the root directory where Dockerfile exists:
 ### Predict
 Navigate to the scripts/main, and run:
 >python cardiovision.py <input_nrrd_file_path> <output_dir> <component_to_be_predicted>
+
 >Example: docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -lv
 
 ## Uninstall Cardiovision
