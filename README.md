@@ -25,6 +25,8 @@ Navigate to the root directory where Dockerfile exists:
 
 >docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image
 
+## Run Cardiovision
+
 ### Train
 - copying training data
 >docker cp <training_data_directory> cv_container:/home/data/training_data
@@ -55,3 +57,6 @@ exit the container using "exit" command. When you are back in the host terminal:
 
 ### To make the changes permanent
 >docker commit cv_container cv_image
+
+### Clean previous training data
+>docker exec cv_container rm -r /home/data/training_data/*
