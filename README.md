@@ -1,4 +1,4 @@
-# cardiovision 0.1 for the 1st time
+# Cardiovision User Manual
 
 ## Prequisites
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
