@@ -17,10 +17,12 @@ if "-lv" in args:
     component = '"lv"'
 elif "-aorta" in args:
     component = '"aorta"'
+elif "-new" in args:
+    component = '"new"'
 else:
     print("Please enter the component to be predicted i.e. -lv to predict left venctricle and -aorta to predict the aorta")
 
-if '-v' in args:
+if '-verbose' in args:
     verbose = True
 else:
     verbose = False
