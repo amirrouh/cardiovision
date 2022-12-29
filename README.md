@@ -40,12 +40,14 @@ Navigate to the scripts/main, and run:
 >python cardiovision.py <input_nrrd_file_path> <output_dir> <component_to_be_predicted>
 
 ## Uninstall Cardiovision
+### Method 1
 exit the container using "exit" command. When you are back in the host terminal:
 >docker stop cv_container\
 >docker rm cv_container\
 >docker rmi cv_image
 
-## Remove all Docker Images/Containers
+### Method 2
+Remove all Docker Images/Containers
 >dockers system prune -a
 
 ## Note
