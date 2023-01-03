@@ -12,20 +12,7 @@
 - Verify that the NVIDIA driver is installed in WSL2 by running:
 > nvidia-smi
 - Add GPU capability for all the docker containers in WSL2:
->url -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | sudo apt-key add - distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-
->curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list 
-
->sudo apt-get update
-
->sudo apt-get install nvidia-container-runtime
-- Restart docker
->sudo systemctl stop docker
-
->sudo systemctl start docker
-- Verify to get the GPU model and CUDA version running:
->docker run --gpus all nvidia/cuda:10.2-cudnn7-devel nvidia-smi
-
+#TODO ADD GPU CAPABILITY TO DOCKER
 
 ## Directory Structure For Training
 Both images and labels should be 512*512 slides saved as nrrd file:
@@ -62,6 +49,13 @@ Navigate to the root directory where Dockerfile exists:
 ### Predict
 Navigate to the scripts/main, and run:
 >python cardiovision.py <input_nrrd_file_path> <output_dir> <component_to_be_predicted>
+
+### Export
+This script is used to export either prediction results of the training weights for future use
+
+- Export prediction results
+Navigate to the scripts directory in the host and run the following
+>python3 io.py -export -results <output_directory>
 
 ## Uninstall Cardiovision
 ### Method 1

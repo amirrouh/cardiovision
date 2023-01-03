@@ -1,6 +1,7 @@
 #!/bin/bash
 
 case $1 in
+    # -p -i -t should be run from docker
     -p) # predicting
     eval "$(conda shell.bash hook)"
     conda activate cardiovision
@@ -20,7 +21,7 @@ case $1 in
     conda activate cnn
     python scripts/generate_settings.py -new
     python cnn/src/train/1_train.py
-    ;;  
+    ;;
     *)
     echo "please use option '-p' for predictions "
 esac
