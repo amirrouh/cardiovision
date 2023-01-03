@@ -12,12 +12,16 @@
 - Verify that the NVIDIA driver is installed in WSL2 by running:
 > nvidia-smi
 - Add GPU capability for all the docker containers in WSL2:
->url -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | sudo apt-key add - distribution=$(. /etc/os-release;echo $ID$VERSION_ID) 
+>url -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | sudo apt-key add - distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+
 >curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list 
+
 >sudo apt-get update
+
 >sudo apt-get install nvidia-container-runtime
 - Restart docker
 >sudo systemctl stop docker
+
 >sudo systemctl start docker
 - Verify to get the GPU model and CUDA version running:
 >docker run --gpus all nvidia/cuda:10.2-cudnn7-devel nvidia-smi
