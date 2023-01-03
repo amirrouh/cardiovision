@@ -3,6 +3,26 @@
 ## Prequisites
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
 - The code is tested successfully on windows and linux
+### Enabling Cuda Accelarion support for Faster training and predictions using docker
+- Install the latest nvidia driver
+- Install WSL2 on windows 11 (if using windows as main host)
+- Install docker on windows and Integrate it with WSL2
+- Add your WSL2 username to the docker group:
+>sudo usermod -aG docker $USER
+- Verify that the NVIDIA driver is installed in WSL2 by running:
+> nvidia-smi
+- Add GPU capability for all the docker containers in WSL2:
+>url -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | sudo apt-key add - distribution=$(. /etc/os-release;echo $ID$VERSION_ID) 
+>curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list 
+>sudo apt-get update
+>sudo apt-get install nvidia-container-runtime
+- Restart docker
+>sudo systemctl stop docker
+>sudo systemctl start docker
+- Verify to get the GPU model and CUDA version running:
+>docker run --gpus all nvidia/cuda:10.2-cudnn7-devel nvidia-smi
+
+
 ## Directory Structure For Training
 Both images and labels should be 512*512 slides saved as nrrd file:
 
