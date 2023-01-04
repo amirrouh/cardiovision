@@ -34,7 +34,7 @@ as long as the numbers are the same for corresponding image and label.
 Navigate to the root directory where Dockerfile exists:
 >docker build -t cv_image .
 
->docker run -d -t --name cv_container -v <output_directory>:/home/data cv_image
+>docker run --gpus all -d -t --name cv_container -v <output_directory>:/home/data cv_image
 
 ## Run Cardiovision
 
@@ -47,8 +47,13 @@ Navigate to the root directory where Dockerfile exists:
 >docker exec cv_container bash /home/app/scripts/cardiovision.sh -t
 
 ### Predict
+(Before prediction, one should make sure the proper training weight for the component exist within the package. So far left ventricle and aorta weight are included.)
+
+Copy the input file to the docker container:
+>docker cp <input_file> cv_container:/home/data/input_file.nrrd
+
 Navigate to the scripts/main, and run:
->python cardiovision.py <input_nrrd_file_path> <output_dir> <component_to_be_predicted>
+>docker exec cv_container bash /home/app/scripts/cardiovision.sh -p <-component> [-verbose]
 
 ### Export
 This script is used to export either prediction results of the training weights for future use
