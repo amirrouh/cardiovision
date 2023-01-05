@@ -11,8 +11,6 @@
 >sudo usermod -aG docker $USER
 - Verify that the NVIDIA driver is installed in WSL2 by running:
 > nvidia-smi
-- Add GPU capability for all the docker containers in WSL2:
-#TODO ADD GPU CAPABILITY TO DOCKER
 
 ## Directory Structure For Training
 Both images and labels should be 512*512 slides saved as nrrd file:

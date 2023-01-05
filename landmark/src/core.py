@@ -504,8 +504,6 @@ def main():
     detector = DetectLandmarks(sample_label)
     results = detector.correct_order()
     
-    # TODO Don't touch the origin and coordinate of the raw image instead using relative coordinate to redefine the landmarks
-
 
 if __name__ == "__main__":
     main()
