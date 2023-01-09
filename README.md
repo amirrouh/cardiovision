@@ -69,7 +69,7 @@ exit the container using "exit" command. When you are back in the host terminal:
 
 ### Method 2
 Remove all Docker Images/Containers
->dockers system prune -a
+>docker system prune -a
 
 ## Note
 ### To login to the docker container:
