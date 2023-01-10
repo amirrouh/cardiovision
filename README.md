@@ -29,6 +29,9 @@ Note that images and labels have some numeric character to relate the two. You c
 as long as the numbers are the same for corresponding image and label.
 
 ## Install Cardiovision
+ ** On MACBOOM With Silicon Processor run this in the terminal first:
+ >export DOCKER_DEFAULT_PLATFORM=linux/amd64
+ 
 Navigate to the root directory where Dockerfile exists:
 >docker build -t cv_image .
 
