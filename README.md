@@ -31,6 +31,8 @@ as long as the numbers are the same for corresponding image and label.
 ## Install Cardiovision
  ** On MACBOOM With Silicon Processor run this in the terminal first:
  >export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
+ ** On WINDOWS if there is an error about not finding bash_script.sh file. Make sure to open the dockerfile and bash_script.sh in a text editor and change the line endings to LF (linux format), save the file, restart the docker enginer and try again
  
 Navigate to the root directory where Dockerfile exists:
 >docker build -t cv_image .
