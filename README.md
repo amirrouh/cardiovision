@@ -1,18 +1,11 @@
 # Cardiovision User Manual
-
-## Prequisites
+Cardiovision (CV) is a user-friendly cross-platform application for medical image segmentation using deep learning. CV is  successfully tested on Windows, Linux, and MacOS (intel and apple sillicon processor).
+# Prequisites
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
-- The code is tested successfully on windows and linux
-### Enabling Cuda Accelarion support for Faster training and predictions using docker
-- Install the latest nvidia driver
-- Install WSL2 on windows 11 (if using windows as main host)
-- Install docker on windows and Integrate it with WSL2
-- Add your WSL2 username to the docker group:
->sudo usermod -aG docker $USER
-- Verify that the NVIDIA driver is installed in WSL2 by running:
-> nvidia-smi
+- On WINDOWS machine use a text editor make sure the dockerfile and bash_script.sh files have linux format (LF) line ending
 
-## Directory Structure For Training
+
+# Directory Structure For Training
 Both images and labels should be 512*512 slides saved as nrrd file:
 
 * path to trainig data
@@ -26,57 +19,33 @@ Both images and labels should be 512*512 slides saved as nrrd file:
         * ...
 
 Note that images and labels have some numeric character to relate the two. You can use any formatting\
-as long as the numbers are the same for corresponding image and label.
+as long as the numbers are the same for any corresponding image and label.
 
-## Install Cardiovision
- ** On MACBOOM With Silicon Processor run this in the terminal first:
- >export DOCKER_DEFAULT_PLATFORM=linux/amd64
+# Install Cardiovision
+>python cv.py install
 
- ** On WINDOWS if there is an error about not finding bash_script.sh file. Make sure to open the dockerfile and bash_script.sh in a text editor and change the line endings to LF (linux format), save the file, restart the docker enginer and try again
- 
-Navigate to the root directory where Dockerfile exists:
->docker build -t cv_image .
+# Using Cardiovision
 
->docker run --gpus all -d -t --name cv_container -v <output_directory>:/home/data cv_image
+### Import/Preprocess training data
+>python cv.py import
 
-## Run Cardiovision
+### Training using costum dataset
+>python cv.py train
 
-### Train
-- copying training data
->docker cp <training_data_directory> cv_container:/home/data/training_data
-- prepare for training
->docker exec cv_container bash /home/app/scripts/cardiovision.sh -i
-- training
->docker exec cv_container bash /home/app/scripts/cardiovision.sh -t
+### Predicting a new case
+>python cv.py predict
 
-### Predict
-(Before prediction, one should make sure the proper training weight for the component exist within the package. So far left ventricle and aorta weight are included.)
+### Exporting training features
+>python cv.py export
 
-Copy the input file to the docker container:
->docker cp <input_file> cv_container:/home/data/input_file.nrrd
+# Reset/Uninstall Cardiovision
+### Resetting Cardiovision
+>python cv.py reset
 
-Navigate to the scripts/main, and run:
->docker exec cv_container bash /home/app/scripts/cardiovision.sh -p <-component> [-verbose]
+### Uninstalling Cardiovision
+>python cv.py uninstall
 
-### Export
-This script is used to export either prediction results of the training weights for future use
-
-- Export prediction results
-Navigate to the scripts directory in the host and run the following
->python3 io.py -export -results <output_directory>
-
-## Uninstall Cardiovision
-### Method 1
-exit the container using "exit" command. When you are back in the host terminal:
->docker stop cv_container\
->docker rm cv_container\
->docker rmi cv_image
-
-### Method 2
-Remove all Docker Images/Containers
->docker system prune -a
-
-## Note
+# Advanced manipulations
 ### To login to the docker container:
 >docker exec -it cv_container /bin/bash
 
@@ -88,3 +57,13 @@ Remove all Docker Images/Containers
 
 ### Clean previous training data
 >docker exec cv_container rm -r /home/data/training_data/*
+
+### Enabling Cuda Accelarion support for Faster training and predictions using docker on Windows Subsystem for Linux (WSL2)
+- Install the latest nvidia driver
+- Install WSL2
+- Install docker on windows and Integrate it with WSL2
+- Add your WSL2 username to the docker group:
+>sudo usermod -aG docker $USER
+- Verify that the NVIDIA driver is installed in WSL2 by running:
+> nvidia-smi
+Which should output the graphic card information

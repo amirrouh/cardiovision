@@ -1,7 +1,7 @@
 import os
 import config
 import sys
-import subprocess
+import platform
 
 args = sys.argv
 
@@ -21,6 +21,10 @@ for l in result[1:]:
     containers.append(line.split()[-1])
 
 if "install" in args:
+    machine = platform.platform()
+    if "macOS" in machine and "arm" in machine:
+        # Neccessary environment variable for apple sillicon processors
+        os.environ['DOCKER_DEFAULT_PLATFORM'] = "linux/amd64"
     if "cv_image" not in images:
         os.system("docker build -t cv_image .")
     if "cv_container" not in containers:
@@ -30,7 +34,7 @@ if "install" in args:
     else:
         print("Something went wrong, plase try again...")
 
-if "prepare" in args:
+if "import" in args:
     print("Copying, augmenting, and preprocessing the training data ")
     os.system(f"docker cp {config.training_data_directory} cv_container:/home/data/training_data")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -i")
@@ -69,7 +73,12 @@ if "uninstall" in args:
     except:
         print("Something weng wrong please try to remove cv_image and cv_container using docker app")
 
+def main():
+    print("success")
+    
 
+if __name__ == "__main__":
+    main()
 
 
 
