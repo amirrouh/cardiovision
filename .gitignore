@@ -1,3 +1,4 @@
+# General
 *.pyc
 shared/
 __pycache__/
@@ -7,7 +8,13 @@ __pycache__/
 checkpoints/
 intermediate/
 
-# nodejs gitignore
+# Django
+*.log
+*.pot
+db.sqlite3
+media
+
+# NodeJS
 # Logs
 logs
 *.log

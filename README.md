@@ -3,6 +3,9 @@ Cardiovision (CV) is a user-friendly cross-platform application for medical imag
 # Prequisites
 - Install docker on Windows/Linux/Mac: https://docs.docker.com/get-docker
 - On WINDOWS machine use a text editor make sure the dockerfile and bash_script.sh files have linux format (LF) line ending
+- At least 30 GB free storage for cardiovision.
+- At least 16 GB RAM is recommended.
+- Nvidia GPU is not necessary but highly recommended.
 
 
 # Directory Structure For Training
