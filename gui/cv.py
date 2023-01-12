@@ -1,9 +1,8 @@
 import os
-import config
+import gui.config as config
 import sys
 import platform
-
-args = sys.argv
+import logging
 
 # read images
 result = os.popen("docker image ls").readlines()
@@ -20,19 +19,24 @@ for l in result[1:]:
     line = l.strip("\n")
     containers.append(line.split()[-1])
 
-if "install" in args:
-    machine = platform.platform()
-    if "macOS" in machine and "arm" in machine:
-        # Neccessary environment variable for apple sillicon processors
-        os.environ['DOCKER_DEFAULT_PLATFORM'] = "linux/amd64"
-    if "cv_image" not in images:
-        os.system("docker build -t cv_image .")
-    if "cv_container" not in containers:
-        os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}:/home/data cv_image")
-    if "cv_image" in images and "cv_container" in containers:
-        print("Cardiovision is installed successfully")
-    else:
-        print("Something went wrong, plase try again...")
+def install():
+    try:
+        machine = platform.platform()
+        if "macOS" in machine and "arm" in machine:
+            # Neccessary environment variable for apple sillicon processors
+            os.environ['DOCKER_DEFAULT_PLATFORM'] = "linux/amd64"
+        if "cv_image" not in images:
+            os.system("docker build -t cv_image .")
+        if "cv_container" not in containers:
+            os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}:/home/data cv_image")
+        if "cv_image" in images and "cv_container" in containers:
+            print("Cardiovision is installed successfully")
+        else:
+            print("Something went wrong, plase try again...")
+        logging.debug("Cardiovision is installed")
+    except Exception as e:
+        logging.error(e)
+        return False
 
 if "import" in args:
     print("Copying, augmenting, and preprocessing the training data ")
