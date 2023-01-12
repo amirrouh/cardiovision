@@ -7,6 +7,7 @@ __pycache__/
 .idea/
 checkpoints/
 intermediate/
+.DS_Store
 
 # Django
 *.log
