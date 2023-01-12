@@ -1,7 +1,17 @@
+import sys
 import os
+from pathlib import Path
 import customtkinter as ctk
 import core
-from time import sleep
+
+this_directory = os.path.abspath(os.path.dirname(__file__))
+working_dir = Path(os.path.join(this_directory, '..'))
+sys.path.append(working_dir)
+
+
+
+print(working_dir)
+
 
 ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("green")
@@ -9,23 +19,30 @@ ctk.set_default_color_theme("green")
 root = ctk.CTk()
 root.title("Carviovision: AI-driven fully automatic medical image processing")
 
+# My Variables
+run_successfully = ctk.BooleanVar()
+
+# My Functions
+def select_directory():
+    directory = ctk.filedialog.askdirectory(title="Please select the directory")
+    return directory
+
+def cv_install():
+    run_successfully = core.CardioVision.install(button_output_directory)
+    return run_successfully
+
+
 
 def install():
     text = "Cardiovision will need at least 30 GB of storage. The installation will take up to 30 minutes depending on your system, are you sure you want to continue? type 'yes' to continue, 'no' to cancel:" 
     message =ctk.CTkInputDialog(title="Are you sure?", text=text).get_input()
     if "yes" in message.lower():
-        try:
-            textBox_output.insert(ctk.END, "Installing cardiovision...\nThis may take a while, please wait...\n\n")
-            sleep(2)
-            core.CardioVision.install(button_output_directory)
-            textBox_output.insert(ctk.END, "Installing finished")
-        except:
+        textBox_output.insert(ctk.END, "Installing cardiovision...\nThis may take a while, please wait...\n\n")
+        textBox_output.after(1, cv_install)
+        if run_successfully.get() == "successfull":
+            textBox_output.insert(ctk.END, "Installation finished")
+        else:
             textBox_output.insert(ctk.END, "Installation failed, please check the cardiovision.log file for more information")
-
-
-def select_directory():
-    directory = ctk.filedialog.askdirectory(title="Please select the directory")
-    return directory
 
 
 # Top and Bottom frames

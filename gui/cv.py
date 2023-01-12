@@ -38,16 +38,16 @@ def install():
         logging.error(e)
         return False
 
-if "import" in args:
+def import_data():
     print("Copying, augmenting, and preprocessing the training data ")
     os.system(f"docker cp {config.training_data_directory} cv_container:/home/data/training_data")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -i")
 
-if "train" in args:
+def train():
     print("Training cardiovision...")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -t")
 
-if "predict" in args:
+def predic():
     print("copying the input file to the docker container...")
     os.system(f"docker cp {config.input_file} cv_container:/home/data/input_file.nrrd")
     print("Predicting the outcome based on the trainig data...")
@@ -57,11 +57,11 @@ if "predict" in args:
         os.system(f"docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -{config.component}")
     print("prediction completed. Please check the output directory")
 
-if "export" in args:
+def export():
     print("Exporting trainig features...")
     os.system(f"python3 io.py -export -results {config.output_directory}")
 
-if "reset" in args:
+def reset():
     print("Resetting the cardiovision...")
     try:
         os.system("docker stop cv_container")
@@ -69,7 +69,7 @@ if "reset" in args:
     except:
         print("something went wrong, please try again or uninsall/install cardiovision")
 
-if "uninstall" in args:
+def uninstall():
     print("Uninstalling the cardiovision")
     try:
         os.system("docker system prune -a")

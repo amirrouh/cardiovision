@@ -3,6 +3,7 @@ import platform
 import sys
 import logging
 from pathlib import Path
+
 this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
@@ -34,6 +35,7 @@ class CardioVision:
                 print("Cardiovision is installed successfully")
             else:
                 print("Something went wrong, plase try again...")
+            return "successfull"
             root_logger.debug("Cardiovision is installed")
         except Exception as e:
             root_logger.error(e)
