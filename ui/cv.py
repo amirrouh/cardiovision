@@ -1,8 +1,9 @@
 import os
-import gui.config as config
 import sys
 import platform
 import logging
+import ui.config as config
+
 
 # read images
 result = os.popen("docker image ls").readlines()
@@ -10,13 +11,15 @@ images = []
 for l in result[1:]:
     line = l.strip("\n")
     images.append(line.split()[0])
-images = images[:-1]
+if len(images) > 1:
+    images = images[:-1]
 
 # read containers
 result = os.popen("docker ps -a").readlines()
 containers = []
 for l in result[1:]:
     line = l.strip("\n")
+if len(containers) > 1:
     containers.append(line.split()[-1])
 
 def install():
@@ -26,9 +29,11 @@ def install():
             # Neccessary environment variable for apple sillicon processors
             os.environ['DOCKER_DEFAULT_PLATFORM'] = "linux/amd64"
         if "cv_image" not in images:
+            print(images)
             os.system("docker build -t cv_image .")
         if "cv_container" not in containers:
-            os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}:/home/data cv_image")
+            print("container is running")
+            os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}/:/home/data cv_image")
         if "cv_image" in images and "cv_container" in containers:
             print("Cardiovision is installed successfully")
         else:
@@ -77,13 +82,10 @@ def uninstall():
     except:
         print("Something weng wrong please try to remove cv_image and cv_container using docker app")
 
-def main():
-    print("success")
-    
-
-if __name__ == "__main__":
-    main()
 
 
+arg = sys.argv[1]
 
 
+if arg.upper == "INSTALL":
+    install()

@@ -27,7 +27,13 @@ as long as the numbers are the same for any corresponding image and label.
 # Install Cardiovision
 >python cv.py install
 
+- Note: If the following ERROR is encuntered: "...cv_image, repository does not exist or may require 'docker login': denied: requested access to the resource is denied...", run the following command in terminal: "rm  ~/.docker/config.json", then try installing the CardioVision again
+
+- Note: Make sure the defined files and directories in the "/ui/config.py" file exist and use the proper path format (For unix systems such as macos and linux, use "/" and in windows systems use "\\\\" to refer to the subdirectories.) 
+
 # Using Cardiovision
+
+Navigate to the "/ui" directory and run the following commands
 
 ### Import/Preprocess training data
 >python cv.py import
@@ -59,7 +65,7 @@ as long as the numbers are the same for any corresponding image and label.
 >docker commit cv_container cv_image
 
 ### Clean previous training data
->docker exec cv_container rm -r /home/data/training_data/*
+>docker exec cv_container rm -rf /home/data/training_data/*
 
 ### Enabling Cuda Accelarion support for Faster training and predictions using docker on Windows Subsystem for Linux (WSL2)
 - Install the latest nvidia driver
