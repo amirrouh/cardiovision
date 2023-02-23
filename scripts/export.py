@@ -30,7 +30,6 @@ if SECRET_KEY:
     latest_weight = max([f for f in weights], key=lambda item: item.stat().st_ctime)
 
 
-
     shutil.copy2(latest_weight, str(output_directory_path / 'weights' / f"{config.component}.hdf5"))
 
 else:

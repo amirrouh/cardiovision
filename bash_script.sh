@@ -40,11 +40,11 @@ conda deactivate
 
 # setting up landmark environment
 eval "$(conda shell.bash hook)"
-conda create --name landmark python=3.8 -y
+conda create --name landmark python=3.7 -y
 conda activate landmark
-conda install -c simpleitk simpleitk -y
-conda install matplotlib scipy pandas -y
-conda install -c conda-forge opencv -y
+conda install -c simpleitk simpleitk=2.2.1 -y
+conda install matplotlib scipy=1.5.2 pandas -y
+conda install -c conda-forge opencv=3.4.2 -y
 conda deactivate
 
 # setting up valve generation environment

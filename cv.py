@@ -31,7 +31,10 @@ def install():
         if "cv_image" not in images:
             os.system("docker build -t cv_image .")
         if "cv_container" not in containers:
-            os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}/:/home/data cv_image")
+            if config.GPU:
+                os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}/:/home/data cv_image")
+            else:
+                os.system(f"docker run -d -t --name cv_container -v {config.output_directory}/:/home/data cv_image")
         if "cv_image" in images and "cv_container" in containers:
             print("Cardiovision is installed successfully")           
         logging.debug("Cardiovision is installed")
@@ -91,3 +94,7 @@ elif arg.upper() == "TRAIN":
     train()
 elif arg.upper() == "EXPORT":
     export()
+elif arg.upper() == "PREDICT":
+    predic()
+elif arg.upper() == "UNINSTALL":
+    uninstall()

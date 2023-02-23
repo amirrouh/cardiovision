@@ -105,6 +105,8 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     
     calcs_corrected=np.zeros(np.shape(calcs))
     blank_arr=np.zeros(np.shape(calcs))
+    calc_valve=np.zeros(np.shape(calcs))
+    
     for calc_label in range(1,cal_num): #Important not to do background of zero
         
         calc_org = np.where(calc_labels == calc_label, 1, 0) #Calcification isolated
@@ -129,13 +131,25 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
             distance=int(valve_z_idx-com_z_idx)
             #Append calcification
             calcs_corrected=calcs_corrected+np.roll(calc_org,distance,axis=0)
+            
+            #calc_valve only contains calcium attached to valve
+            calc_valve=calc_valve+np.roll(calc_org,distance,axis=0)
+
                 
-    #Create stl and nrrd of corrected calcs
-    calcs_info_corr = sitk.GetImageFromArray(calcs_corrected) #Convert image to sitk recognized image
+#    #Create stl and nrrd of corrected calcs
+#    calcs_info_corr = sitk.GetImageFromArray(calcs_corrected) #Convert image to sitk recognized image
+#    calcs_info_corr.CopyInformation(raw) #Copy image data info from original nrrd
+#    sitk.WriteImage(calcs_info_corr,calcs_path_nrrd_corr) #Write .nrrd image
+#    create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
+    
+    #Creates stl and nrrd of calcs that are touching the valve
+    calcs_info_corr = sitk.GetImageFromArray(calc_valve) #Convert image to sitk recognized image
     calcs_info_corr.CopyInformation(raw) #Copy image data info from original nrrd
     sitk.WriteImage(calcs_info_corr,calcs_path_nrrd_corr) #Write .nrrd image
     create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
     
+    
+
     return
 
 

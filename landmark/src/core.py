@@ -1,6 +1,7 @@
 import os.path
 import sys
 
+
 import SimpleITK as sitk
 import cv2
 import numpy as np
