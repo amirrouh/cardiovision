@@ -1,4 +1,4 @@
-output_directory = "/mnt/d/amir/cardiovision_results"
+output_dir = "/mnt/d/amir/cardiovision_results"
 training_data_directory = "/mnt/d/data/segmentations/aorta_segmentations/"
 input_file = "/mnt/d/data/segmentations/aorta_segmentations/images/ct29.nrrd"
 

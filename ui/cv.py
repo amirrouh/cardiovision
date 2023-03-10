@@ -33,7 +33,7 @@ def install():
             os.system("docker build -t cv_image .")
         if "cv_container" not in containers:
             print("container is running")
-            os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_directory}/:/home/data cv_image")
+            os.system(f"docker run --gpus all -d -t --name cv_container -v {config.output_dir}/:/home/data cv_image")
         if "cv_image" in images and "cv_container" in containers:
             print("Cardiovision is installed successfully")
         else:
@@ -64,7 +64,7 @@ def predic():
 
 def export():
     print("Exporting trainig features...")
-    os.system(f"python3 io.py -export -results {config.output_directory}")
+    os.system(f"python3 io.py -export -results {config.output_dir}")
 
 def reset():
     print("Resetting the cardiovision...")

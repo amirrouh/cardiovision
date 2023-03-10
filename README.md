@@ -94,3 +94,10 @@ or if another windows account is trying to use the docker, then run the followin
 - Verify that the NVIDIA driver is installed in WSL2 by running:
 > nvidia-smi
 Which should output the graphic card information
+
+## How to Add a Module to CardioVision
+- create a folder in the root directory: (i.e. cardiovision/new_module)
+- create two subdirectories: "scripts" and "src"
+- run.py file within the scriprt dir including a single function to run the module
+- copy the module source code within the src subdirectory
+- edit cv/bash_script.sh and add the conda environment for the new module according using other modules and template.

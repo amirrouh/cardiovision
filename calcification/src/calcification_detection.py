@@ -9,7 +9,7 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = os.path.join(this_directory, '..')
 sys.path.append(working_dir)
 
-from utils.settings import input_file
+from utils.config import input_file
 from utils.io import FileFolders
 
 from calcification.src.geometry_tools import create_stl, ply_to_leaflet

@@ -35,5 +35,5 @@ if SECRET_KEY:
 else:
     # If running outside of the container
     os.system(f"docker exec -ti cv_container python /home/app/scripts/export.py")
-    os.system(f"docker cp cv_container:/home/data/cardiovision_results/. {config.output_directory}")
+    os.system(f"docker cp cv_container:/home/data/cardiovision_results/. {config.output_dir}")
 

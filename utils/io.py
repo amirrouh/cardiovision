@@ -11,7 +11,7 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
-from utils import settings
+import config
 
 
 @dataclass
@@ -20,7 +20,7 @@ class FileFolders:
         'global': {
             'shared': working_dir / 'shared',
             'valve_cusps': working_dir / 'shared' / 'valve_cusps',
-            'output_dir': Path(settings.output_dir)
+            'output_dir': Path(config.output_dir)
         },
         'cnn': {
             'intermediate': working_dir / 'cnn' / 'intermediate',
