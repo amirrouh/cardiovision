@@ -2,7 +2,7 @@ import os
 import sys
 import platform
 import logging
-import ui.config as config
+import config as config
 
 
 # read images

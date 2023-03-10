@@ -29,11 +29,26 @@ as long as the numbers are the same for any corresponding image and label.
 
 - Note: If the following ERROR is encuntered: "...cv_image, repository does not exist or may require 'docker login': denied: requested access to the resource is denied...", run the following command in terminal: "rm  ~/.docker/config.json", then try installing the CardioVision again
 
+- Note: If the following ERROR is encountered: ... docker login: denied", run the following commands in the terminal before installing the CV.
+> export DOCKER_BUILDKIT=0
+
+> export COMPOSE_DOCKER_CLI_BUILD=0
+
+
 - Note: Make sure the defined files and directories in the "/ui/config.py" file exist and use the proper path format (For unix systems such as macos and linux, use "/" and in windows systems use "\\\\" to refer to the subdirectories.) 
+
+- Making sure the docker image and containers are installed and running properly. This can be done either within the docker desktop app or via the command line. For examle, for a unix terminal (MAC, LINUX, Windows WSL2) the command "docker ps" should return the info including the "cv_container" name.
 
 # Using Cardiovision
 
-Navigate to the "/ui" directory and run the following commands
+### Edit the configuration file properly:
+
+- output_directory: directory in which the results will be saved
+- training_data_directory: path to the trainig data
+- input_file: new nrrd file based on which the predictions will be done
+- component: predicting component which is "aorta" for digital twin and "lv" for left venctricle, more components can be added in future. Also, customly trained components will be added here.
+- verbose: if "True", prints out the output of the python console useful for debugging the code
+- GPU: if True, it will use the CUDA enabled NVIDIA GPU. If not, it will use the CPU
 
 ### Import/Preprocess training data
 >python cv.py import
@@ -72,14 +87,10 @@ Navigate to the "/ui" directory and run the following commands
 - Install WSL2
 - Install docker on windows and Integrate it with WSL2
 - Add your WSL2 username to the docker group:
->sudo usermod -aG docker $USER
+> sudo usermod -aG docker $USER
+or if another windows account is trying to use the docker, then run the following code:
+> net localgroup docker-users "your-user-id" /ADD
+
 - Verify that the NVIDIA driver is installed in WSL2 by running:
 > nvidia-smi
 Which should output the graphic card information
-
-## Powered by
-
-|First Image|Second Image|Third Image|
-|:-:|:-:|:-:|
-|![First Image](https://images.pexels.com/photos/585759/pexels-photo-585759.jpeg?h=750&w=1260)|![Second Image](https://images.pexels.com/photos/1335115/pexels-photo-1335115.jpeg?h=750&w=1260)|!
-[Third Image](https://images.pexels.com/photos/1335115/pexels-photo-1335115.jpeg?h=750&w=1260)|

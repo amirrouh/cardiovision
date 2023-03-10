@@ -9,7 +9,6 @@ working_dir = Path(os.path.join(this_directory, '..'))
 sys.path.append(working_dir)
 
 
-
 print(working_dir)
 
 
@@ -22,15 +21,16 @@ root.title("Carviovision: AI-driven fully automatic medical image processing")
 # My Variables
 run_successfully = ctk.BooleanVar()
 
+
 # My Functions
 def select_directory():
     directory = ctk.filedialog.askdirectory(title="Please select the directory")
     return directory
 
+
 def cv_install():
     run_successfully = core.CardioVision.install(button_output_directory)
     return run_successfully
-
 
 
 def install():

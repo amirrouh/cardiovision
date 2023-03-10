@@ -2,7 +2,7 @@ import os
 import sys
 import platform
 import logging
-import ui.config as config
+import config as config
 
 
 # read images
@@ -52,7 +52,7 @@ def train():
     print("Training cardiovision...")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -t")
 
-def predic():
+def predict():
     print("copying the input file to the docker container...")
     os.system(f"docker cp {config.input_file} cv_container:/home/data/input_file.nrrd")
     print("Predicting the outcome based on the trainig data...")
@@ -95,6 +95,6 @@ elif arg.upper() == "TRAIN":
 elif arg.upper() == "EXPORT":
     export()
 elif arg.upper() == "PREDICT":
-    predic()
+    predict()
 elif arg.upper() == "UNINSTALL":
     uninstall()

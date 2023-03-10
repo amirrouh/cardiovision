@@ -5,7 +5,7 @@ import shutil
 from time import sleep
 
 sys.path.append(os.getcwd())
-import ui.config as config
+import config as config
 
 
 SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
