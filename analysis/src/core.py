@@ -20,6 +20,8 @@ def split(cv_results_path: Path):
     cusps = list(cv_results_path.rglob("*cusp.ply"))
     calcium_file = cv_results_path/"calcs_corr.stl"
 
+    print(cv_results_path)
+
     right_cusp = np.asarray(o3d.io.read_triangle_mesh(str(cusps[0])))
     left_cusp = np.asarray(o3d.io.read_triangle_mesh(str(cusps[1])))
     non_cusp = np.asarray(o3d.io.read_triangle_mesh(str(cusps[2])))
