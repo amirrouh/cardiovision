@@ -40,7 +40,12 @@ as long as the numbers are the same for any corresponding image and label.
 - Making sure the docker image and containers are installed and running properly. This can be done either within the docker desktop app or via the command line. For examle, for a unix terminal (MAC, LINUX, Windows WSL2) the command "docker ps" should return the info including the "cv_container" name.
 
 # Using Cardiovision
+### Before running
+- Make sure the cv_container is running which can be seen in the output of the following command:
+> docker ps
 
+if not running, run the following command:
+> docker start cv_container
 ### Edit the configuration file properly:
 
 - output_directory: directory in which the results will be saved
@@ -88,7 +93,9 @@ as long as the numbers are the same for any corresponding image and label.
 - Install docker on windows and Integrate it with WSL2
 - Add your WSL2 username to the docker group:
 > sudo usermod -aG docker $USER
+
 or if another windows account is trying to use the docker, then run the following code:
+
 > net localgroup docker-users "your-user-id" /ADD
 
 - Verify that the NVIDIA driver is installed in WSL2 by running:
