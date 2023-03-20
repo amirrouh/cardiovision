@@ -149,3 +149,7 @@ dist
 
 #developement folder
 dev/
+
+# geometry files
+*.ply
+*.stl
