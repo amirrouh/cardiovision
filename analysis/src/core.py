@@ -1,49 +1,47 @@
 import sys
 import os
+from pathlib import Path
+import numpy as np
 
+import pandas as pd
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = os.path.join(this_directory, '..', '..')
 sys.path.append(working_dir)
 
-
-from analysis.src._helpers import calcium_on_cusps_ply, output_dir
-from analysis.src._helpers import create_folders
-# from analysis.src.geometrical_tools import detect_islands_stl, ply_to_stl
+from analysis.src.helpers import create_folders, split, get_ply_volume
+from config import output_dir, verbose
 
 create_folders()
 
-# ply_to_stl(calcium_on_cusps_ply[0], str(output_dir / 'analysis' / "test.stl"), 0.9)
+# split(output_dir)
 
-# detect_islands(calcium_on_cusps_ply[1], output_dir/'calcs_corr.stl')
+cusps = ['left', 'right', 'non', 'total']
 
-# detect_islands_ply(calcium_on_cusps_ply[0], output_dir/'analysis')
+result_files = list(map(str, Path(output_dir).rglob("*")))
 
+volumes = {}
+for c in cusps:
+    if verbose:
+        print(f"Calcium districution is being calculated for {c}")
+    
+    calc_ply_file = os.path.join(output_dir, f"calcium_{c}.ply")
+    if os.path.isfile(calc_ply_file):
+        volumes[c] = get_ply_volume(calc_ply_file)
+    else:
+        volumes[c] = 0
+    # calculate total calcium burden
 
-# detect_islands_stl(output_dir/'calcs_corr.stl', output_dir / 'analysis')
+values = (list(volumes.values()))
+volumes['total'] = sum(values)
+        
+if volumes:
+    df = pd.DataFrame(list(volumes.values()), index=cusps, columns=['volume (mm^3)'])
+    df.index.name = 'cusp'
+else:
+    print("No volumes calculated.")
 
-def ply_to_stl():
+if verbose:
+    print(df)
 
-    import pyvista as pv
-
-    # Load PLY file as point cloud
-    cloud = pv.read(calcium_on_cusps_ply[0])
-
-    # Perform Poisson surface reconstruction
-    surface = cloud.delaunay_3d(alpha=0.0)
-
-    # Convert to triangular mesh
-    mesh = surface.extract_geometry().triangulate()
-
-    # mesh = surface.extract_geometry().to_tetrahedra()
-
-    # fill the holes
-    mesh = mesh.fill_holes(1000)
-
-    # Save as STL
-    mesh.save(str(output_dir / 'analysis'/ 'output.stl'))
-
-# ply_to_stl()
-
-in_file = str(output_dir / 'analysis'/ 'output.stl')
-out_file = str(output_dir / 'analysis'/ 'output_fixed.stl')
+df.to_csv(os.path.join(output_dir, 'calcium_volumes.csv'))

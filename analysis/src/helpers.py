@@ -1,4 +1,8 @@
 from pathlib import Path
+import sys
+import os
+
+from pathlib import Path
 import open3d as o3d
 import numpy as np
 import pandas as pd
@@ -9,8 +13,39 @@ from scipy.spatial import Delaunay
 from plyfile import PlyData
 from tqdm import tqdm
 import shutil
-import plyfile
 from scipy.spatial import ConvexHull
+
+# this_directory = os.path.abspath(os.path.dirname(__file__))
+working_dir = os.path.join('..', '..')
+sys.path.append(working_dir)
+
+from config import output_dir
+
+
+output_dir = Path(output_dir)
+cusps = ["left", "right", "non"]
+
+
+def create_folders():
+    analysis_dir = output_dir / 'analysis'
+    analysis_dir.mkdir(parents=True, exist_ok=True)
+
+    islands_dir = analysis_dir / 'islands'
+    islands_dir.mkdir(parents=True, exist_ok=True)
+
+    left_cusp_islands = islands_dir / "left_cusp"
+    right_cusp_islands = islands_dir / "right_cusp"
+    non_cusp_islands = islands_dir / "non_cusp"
+    left_cusp_islands.mkdir(parents=True, exist_ok=True)
+    right_cusp_islands.mkdir(parents=True, exist_ok=True)
+    non_cusp_islands.mkdir(parents=True, exist_ok=True)
+
+
+calcium_on_cusps_ply = list(output_dir.rglob("*calcium_*.ply"))
+calcium_on_cusps_ply = list(map(str, calcium_on_cusps_ply))
+
+calcium_on_cusps_stl = list(output_dir.rglob("*calcium_*.stl"))
+calcium_on_cusps_stl = list(map(str, calcium_on_cusps_stl))
 
 
 def ply_to_stl(ply_path:Path,stl_path:Path,alpha):
@@ -167,10 +202,12 @@ def keep_intersected_islands(reference_cloud: Path, islands_path: Path, saveto_p
         
 def split(cv_results_path: Path):
 
+    print("Splitting the calcium islands projected on each leaflet")
+
+    cv_results_path = Path(cv_results_path)
+
     cusps = list(cv_results_path.rglob("*cusp.ply"))
     calcium_file = cv_results_path/"calcs_corr.stl"
-
-    print(cv_results_path)
 
     right_cusp = np.asarray(o3d.io.read_triangle_mesh(str(cusps[0])))
     left_cusp = np.asarray(o3d.io.read_triangle_mesh(str(cusps[1])))
@@ -283,7 +320,7 @@ def get_ply_volume(ply_file):
     Return the volume of a given point cloud file
     """
     # Load the point cloud data
-    pcd = o3d.io.read_point_cloud(leaflet_path)
+    pcd = o3d.io.read_point_cloud(ply_file)
     points = np.asarray(pcd.points)
 
     # Compute the convex hull of the point cloud
@@ -292,4 +329,4 @@ def get_ply_volume(ply_file):
     # Calculate the volume of the convex hull
     volume = hull.volume
 
-    return volume
+    return np.round(volume,1)
