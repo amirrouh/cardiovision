@@ -10,6 +10,7 @@ from plyfile import PlyData
 from tqdm import tqdm
 import shutil
 import plyfile
+from scipy.spatial import ConvexHull
 
 
 def ply_to_stl(ply_path:Path,stl_path:Path,alpha):
@@ -69,13 +70,6 @@ def detect_islands_stl(input_stl_file: Path, output_dir: Path):
     for i, component in enumerate(components):
         # Save the component as a separate STL file
         component.export(str(output_dir/'component_{}.stl'.format(i)))
-
-
-
-
-
-
-
 
 
 
@@ -281,4 +275,21 @@ def get_stl_volume(stl_file):
     stl_file = mesh.Mesh.from_file(stl_file)
     # Calculate the volume of the mesh
     volume, _, _ = stl_file.get_mass_properties()
+    return volume
+
+
+def get_ply_volume(ply_file):
+    """
+    Return the volume of a given point cloud file
+    """
+    # Load the point cloud data
+    pcd = o3d.io.read_point_cloud(leaflet_path)
+    points = np.asarray(pcd.points)
+
+    # Compute the convex hull of the point cloud
+    hull = ConvexHull(points)
+
+    # Calculate the volume of the convex hull
+    volume = hull.volume
+
     return volume

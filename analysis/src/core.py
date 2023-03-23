@@ -43,7 +43,7 @@ def ply_to_stl():
     # Save as STL
     mesh.save(str(output_dir / 'analysis'/ 'output.stl'))
 
-ply_to_stl()
+# ply_to_stl()
 
 in_file = str(output_dir / 'analysis'/ 'output.stl')
 out_file = str(output_dir / 'analysis'/ 'output_fixed.stl')
