@@ -46,7 +46,10 @@ class FileFolders:
         },
         'calcification': {
             'calcification_shared': working_dir / 'calcification' / 'shared',
-        }
+        },
+        'analysis': {
+            'analysis_shared': working_dir / 'analysis' / 'shared',
+        },
     }
     
     files = {
@@ -89,6 +92,12 @@ class FileFolders:
 
             'calcs_path_nrrd_corr': working_dir/'calcification'/'shared'/'calcs_path_nrrd_corr.nrrd',
             },
+        'analysis': {
+            'calcium_volumes': working_dir / 'analysis' / 'shared' / 'calcium_volumes.csv',
+            'left_cusp': working_dir / 'analysis' / 'shared' / 'left_cusp.ply',
+            'right_cusp': working_dir / 'analysis' / 'shared' / 'right_cusp.ply',
+            'non_cusp': working_dir / 'analysis' / 'shared' / 'non_cusp.ply',
+        },
     }
     
 
@@ -181,6 +190,7 @@ class Functions:
                     except:
                         shutil.rmtree(f)
                         
+    
         shutil.copytree(source_dir, destination_dir, dirs_exist_ok=True)
         
 def main():

@@ -64,11 +64,8 @@ conda deactivate
 # setting up analysis environment
 eval "$(conda shell.bash hook)"
 conda create --name analysis python=3.8 -y
-conda install pandas numpy -y
-conda install -c conda-forge scikit-learn tqdm -y
-conda install -c conda-forge pyyaml -y
-conda install -c conda-forge addict -y
-conda install -c conda-forge plyfile -y
+pip install open3d
+pip install numpy pandas scipy
 
 conda deactivate
 

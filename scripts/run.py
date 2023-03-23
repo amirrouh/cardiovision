@@ -1,7 +1,5 @@
 import os
 import sys
-import shutil
-from pathlib import Path
 
 from tqdm import tqdm
 
@@ -12,7 +10,7 @@ sys.path.append(working_dir)
 from utils.io import Functions
 from utils.helpers import run_module
 from utils.io import FileFolders
-from utils.config import component, output_dir
+from utils.config import component
 
 # Folders to keep intact during cleaning up the previous run
 excludes = [
@@ -29,6 +27,7 @@ if component == 'aorta':
         'landmark': '',
         'valve': '',
         'calcification': '',
+        'analysis': '',
         'report': '',
     }
 
