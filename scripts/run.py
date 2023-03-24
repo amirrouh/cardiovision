@@ -10,7 +10,7 @@ sys.path.append(working_dir)
 from utils.io import Functions
 from utils.helpers import run_module
 from utils.io import FileFolders
-from utils.config import component
+from config import component
 
 # Folders to keep intact during cleaning up the previous run
 excludes = [

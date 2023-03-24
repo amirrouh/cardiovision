@@ -13,7 +13,7 @@ from config import output_dir
 from utils.io import FileFolders
 from config import verbose
 
-split(FileFolders.files['analysis']['analysis_shared'])
+split(FileFolders.folders['global']['shared'])
 
 cusps = ['left', 'right', 'non', 'total']
 
@@ -42,15 +42,3 @@ if verbose:
     print(df)
 
 df.to_csv(FileFolders.files['analysis']['calcium_volumes'])
-
-this_directory = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(os.path.join(this_directory, '..', '..'))
-
-
-distutils.log.set_verbosity(distutils.log.DEBUG)
-distutils.dir_util.copy_tree(
-    FileFolders.folders['analysis']['shared'],
-    output_dir,
-    update=1,
-    verbose=0,
-)

@@ -12,8 +12,10 @@ sys.path.append(working_dir)
 from cnn.src.helpers.utils import resample, pad_crop
 from cnn.src.helpers.unet import UNet
 from utils.io import FileFolders
-from utils.config import input_file, component
+from config import component
 
+
+input_file = "/home/data/input_file.nrrd"
 
 # resample image
 sample_img = sitk.ReadImage(input_file)

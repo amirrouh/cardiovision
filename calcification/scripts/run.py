@@ -5,8 +5,9 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(this_directory, '..', '..'))
 
 from utils.io import FileFolders
-from utils.config import input_file
 from calcification.src.calcification_detection import detect_and_move_calcs
+
+input_file = "/home/data/input_file.nrrd"
 
 predicted_path = str(FileFolders.files['cnn']['predicted_label'])
 image_path = input_file

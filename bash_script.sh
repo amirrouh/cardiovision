@@ -64,6 +64,7 @@ conda deactivate
 # setting up analysis environment
 eval "$(conda shell.bash hook)"
 conda create --name analysis python=3.8 -y
+conda activate analysis
 pip install open3d
 pip install numpy pandas scipy
 

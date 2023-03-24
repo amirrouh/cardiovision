@@ -7,7 +7,7 @@ import shutil
 this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = Path(os.path.join(this_directory, '..'))
 
-from utils.config import verbose
+from config import verbose
 
 conda_envs = Path(os.environ['CONDA_PREFIX']).parents[0]
     

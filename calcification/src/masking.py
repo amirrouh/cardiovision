@@ -67,7 +67,7 @@ def make_aortic_root_mask(valve,mask_arr,*argv):
         if z_stack>lower_valve_z: #if stack is above the most inferior point of valve
             perimeters=np.append(perimeters,np.nan)
         else:
-            perimeters=np.append(perimeters,perimeter(mask_arr[z_stack,:,:], neighbourhood=4)) 
+            perimeters=np.append(perimeters,perimeter(mask_arr[z_stack,:,:], neighborhood=4)) 
     perimeters_diff=np.gradient(perimeters)
     VAA_z = np.nanargmin(perimeters_diff) #Z coordinate of VAA
     mask_depth=upper_valve_z-VAA_z #Mask depth

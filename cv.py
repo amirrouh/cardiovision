@@ -4,6 +4,7 @@ import platform
 import logging
 import config as config
 
+input_file = config.input_file
 
 # read images
 result = os.popen("docker image ls").readlines()
@@ -54,12 +55,15 @@ def train():
 
 def predict():
     print("copying the input file to the docker container...")
-    os.system(f"docker cp {config.input_file} cv_container:/home/data/input_file.nrrd")
+    os.system(f"docker cp {input_file} cv_container:/home/data/input_file.nrrd")
     print("Predicting the outcome based on the trainig data...")
     if config.verbose:
         os.system(f"docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -{config.component} -verbose")
     else:
         os.system(f"docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -{config.component}")
+    
+    os.system(f"docker cp cv_container:/home/app/shared {config.output_dir}")
+
     print("prediction completed. Please check the output directory")
 
 def export():

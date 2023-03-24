@@ -9,11 +9,13 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 working_dir = os.path.join(this_directory, '..')
 sys.path.append(working_dir)
 
-from utils.config import input_file
 from utils.io import FileFolders
 
 from calcification.src.geometry_tools import create_stl, ply_to_leaflet
 from calcification.src.masking import make_aortic_root_mask
+
+
+input_file = "/home/data/input_file.nrrd"
 
        
 def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_path_3,\
@@ -127,6 +129,22 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
             com_z_idx=int(np.where(com[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)[0])
             #Average z coordinate of valve directly above/below COM of calcification
             valve_z_idx=int(round(np.mean(np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1))))
+
+
+
+            valve_z_idx_array = np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)
+            if len(valve_z_idx_array) > 0:
+
+                valve_z_idx_array = np.array(valve_z_idx_array)
+                valve_z_idx_array = valve_z_idx_array[~np.isnan(valve_z_idx_array)] # remove NaN values
+                valve_z_idx = int(round(np.mean(valve_z_idx_array)))
+
+                valve_z_idx = int(round(np.nanmean(valve_z_idx_array)))
+            else:
+                valve_z_idx = 0
+
+
+
             #Distance in Z direction between calc COM and valve
             distance=int(valve_z_idx-com_z_idx)
             #Append calcification
@@ -149,7 +167,4 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
     
     
-
     return
-
-
