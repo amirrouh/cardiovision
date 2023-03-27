@@ -54,7 +54,7 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     """  
     
     
-    calc_thresh=500 #Lower threshold for calcificiation
+    calc_thresh=800 #Lower threshold for calcificiation
     multi_factor=10 #Factpr used to interpolate .ply and .nrrd
     
     raw = sitk.ReadImage(str(raw_path)) #Load grayscale image
@@ -120,6 +120,7 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     
         #Determine if COM of calc is inside mask
         com_status=np.max(np.logical_and(com,valve_mask)) 
+
         
         if com_status==False: #When calcification COM is outside of the mask
             #Append unedited calcification. This one does not need to be altered
@@ -127,38 +128,28 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
         else: #When calcification COM is inside of the mask
             #COM z coordinate
             com_z_idx=int(np.where(com[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)[0])
+            #print(com_idx)
             #Average z coordinate of valve directly above/below COM of calcification
-            valve_z_idx=int(round(np.mean(np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1))))
+            #print(valve_mask[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)
+            try:
+                valve_z_idx=int(round(np.mean(np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1))))
+                #Distance in Z direction between calc COM and valve
+                distance=int(valve_z_idx-com_z_idx)
+                #Append calcification
+                calcs_corrected=calcs_corrected+np.roll(calc_org,distance,axis=0)
+                
+                #calc_valve only contains calcium attached to valve
+                calc_valve=calc_valve+np.roll(calc_org,distance,axis=0)
+            except:
+                pass
 
-
-
-            valve_z_idx_array = np.where(valve[:,int(round(com_idx[1])),int(round(com_idx[2]))]==1)
-            if len(valve_z_idx_array) > 0:
-
-                valve_z_idx_array = np.array(valve_z_idx_array)
-                valve_z_idx_array = valve_z_idx_array[~np.isnan(valve_z_idx_array)] # remove NaN values
-                valve_z_idx = int(round(np.mean(valve_z_idx_array)))
-
-                valve_z_idx = int(round(np.nanmean(valve_z_idx_array)))
-            else:
-                valve_z_idx = 0
-
-
-
-            #Distance in Z direction between calc COM and valve
-            distance=int(valve_z_idx-com_z_idx)
-            #Append calcification
-            calcs_corrected=calcs_corrected+np.roll(calc_org,distance,axis=0)
-            
-            #calc_valve only contains calcium attached to valve
-            calc_valve=calc_valve+np.roll(calc_org,distance,axis=0)
 
                 
 #    #Create stl and nrrd of corrected calcs
-#    calcs_info_corr = sitk.GetImageFromArray(calcs_corrected) #Convert image to sitk recognized image
-#    calcs_info_corr.CopyInformation(raw) #Copy image data info from original nrrd
-#    sitk.WriteImage(calcs_info_corr,calcs_path_nrrd_corr) #Write .nrrd image
-#    create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
+    #calcs_info_corr = sitk.GetImageFromArray(calcs_corrected) #Convert image to sitk recognized image
+    #calcs_info_corr.CopyInformation(raw) #Copy image data info from original nrrd
+    #sitk.WriteImage(calcs_info_corr,calcs_path_nrrd_corr) #Write .nrrd image
+    #create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
     
     #Creates stl and nrrd of calcs that are touching the valve
     calcs_info_corr = sitk.GetImageFromArray(calc_valve) #Convert image to sitk recognized image
@@ -167,4 +158,5 @@ def detect_and_move_calcs(raw_path,mask_path,valve_path_1,valve_path_2,valve_pat
     create_stl(calcs_path_nrrd_corr,calcs_path_stl_corr) #create stl of processed image
     
     
+
     return
