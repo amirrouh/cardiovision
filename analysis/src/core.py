@@ -21,7 +21,7 @@ def split(cv_results_path: Path):
 
     cv_results_path = Path(cv_results_path)
 
-    calcium_file = cv_results_path/"calcs_corr.stl"
+    calcium_file = str(list(cv_results_path.rglob("calcs_corr.stl"))[0])
 
     calcium = np.asarray(o3d.io.read_triangle_mesh(str(calcium_file)).vertices)
     landmarks = pd.read_csv(cv_results_path/"landmarks.csv", header=None)
@@ -59,6 +59,15 @@ def split(cv_results_path: Path):
         counter += 1
         targets = []
 
+    if (bottom_angels[0] <= angel < bottom_angels[1]) or (bottom_angels[1] <= angel < bottom_angels[0]):
+        targets.append("left")
+    elif (bottom_angels[1] <= angel < bottom_angels[2]) or (bottom_angels[2] <= angel < bottom_angels[1]):
+        targets.append("right")
+    else:
+        targets.append("none")
+
+
+        """
         # Left cusp
         if bottom_angels[0] < bottom_angels[1]:
             if bottom_angels[0] <= angel <= bottom_angels[1]:
@@ -82,6 +91,7 @@ def split(cv_results_path: Path):
         else:
             if angel <= bottom_angels[2]:
                 targets.append("right")
+        """
 
         if "left" in targets:
             calcium_left.append(point)
@@ -94,7 +104,7 @@ def split(cv_results_path: Path):
     calcium_right_pcd.points = o3d.utility.Vector3dVector(calcium_right)
     try:
         o3d.io.write_point_cloud(
-            FileFolders.files['analysis']['right_cusp'], calcium_right_pcd)
+            str(FileFolders.files['analysis']['right_cusp']), calcium_right_pcd)
     except:
         print("There is no calcium on the right cusp")
 
@@ -102,7 +112,7 @@ def split(cv_results_path: Path):
     calcium_left_pcd.points = o3d.utility.Vector3dVector(calcium_left)
     try:
         o3d.io.write_point_cloud(
-            FileFolders.files['analysis']['left_cusp'], calcium_right_pcd)
+            str(FileFolders.files['analysis']['left_cusp']), calcium_left_pcd)
     except:
         print("There is no calium on the left cusp")
 
@@ -110,7 +120,7 @@ def split(cv_results_path: Path):
     calcium_none_pcd.points = o3d.utility.Vector3dVector(calcium_none)
     try:
         o3d.io.write_point_cloud(
-            FileFolders.files['analysis']['non_cusp'], calcium_right_pcd)
+            str(FileFolders.files['analysis']['non_cusp']), calcium_none_pcd)
     except:
         print("There is no calcium on the non-coronary cusp")
 
