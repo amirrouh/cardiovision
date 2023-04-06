@@ -60,11 +60,11 @@ def split(cv_results_path: Path):
         targets = []
 
     if (bottom_angels[0] <= angel < bottom_angels[1]) or (bottom_angels[1] <= angel < bottom_angels[0]):
-        targets.append("left")
+        targets.append("none")
     elif (bottom_angels[1] <= angel < bottom_angels[2]) or (bottom_angels[2] <= angel < bottom_angels[1]):
         targets.append("right")
     else:
-        targets.append("none")
+        targets.append("left")
 
 
         """
