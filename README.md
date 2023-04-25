@@ -46,6 +46,10 @@ as long as the numbers are the same for any corresponding image and label.
 
 if not running, run the following command:
 > docker start cv_container
+
+if error "Error response from daemon: error while creating mount source path..." occured:
+> restart the docker application
+d
 ### Edit the configuration file properly:
 
 - output_directory: directory in which the results will be saved

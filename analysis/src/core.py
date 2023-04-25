@@ -140,3 +140,18 @@ def get_ply_volume(ply_file):
     volume = hull.volume
 
     return np.round(volume,1)
+
+
+def get_stl_centroid(stl_file):
+    # Load STL file
+    your_mesh = mesh.Mesh.from_file(stl_file)
+
+    # Get vertices
+    vertices = your_mesh.vectors.reshape(-1, 3)
+
+    # Compute the convex hull
+    hull = ConvexHull(vertices)
+
+    # Calculate the center of mass using the convex hull
+    centroid = np.mean(vertices[hull.vertices], axis=0)
+    return centroid
