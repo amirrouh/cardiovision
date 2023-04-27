@@ -30,6 +30,7 @@ def install():
             # Neccessary environment variable for apple sillicon processors
             os.environ['DOCKER_DEFAULT_PLATFORM'] = "linux/amd64"
         if "cv_image" not in images:
+            print('test')
             os.system("docker build -t cv_image .")
         if "cv_container" not in containers:
             if config.GPU:
