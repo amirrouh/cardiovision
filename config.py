@@ -1,6 +1,7 @@
-output_dir = "/mnt/d/amir/"
-training_data_directory = "/mnt/d/data/segmentations/aorta_segmentations/"
-input_file = "/mnt/d/data/segmentations/aorta_segmentations/images/ct29.nrrd"
+output_dir = "/mnt/c/Users/SH1389/Documents/data/"
+training_dir = "/mnt/c/Users/SH1389/Documents/data/sample_data/training_data/"
+training_data_directory = "/mnt/c/Users/SH1389/Documents/data/sample_data/training_data/"
+input_file = "/mnt/c/Users/SH1389/Documents/data/aorta/validation_data/images/aCT29.nrrd"
 # input_file = "/mnt/c/Users/ae445/Downloads/resampled/resampled/aCT8.nrrd"
 
 # component can be "aorta"; "lv"

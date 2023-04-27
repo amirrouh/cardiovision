@@ -23,6 +23,7 @@ sheets_folder = folders['cnn']['sheets']
 # creating required folders for training
 Functions.create()
 
+
 if __name__ == '__main__':
     image_set = "set_1"
     cts_dir = Path(training_dir)/'images'
@@ -46,17 +47,16 @@ if __name__ == '__main__':
         z_size_original = img.GetSize()[2]
 
         img = resample(img, output_spacing=(inplane_spacing, inplane_spacing, z_spacing_original),
-                       interplator=sitk.sitkLinear)
+                    interplator=sitk.sitkLinear)
         img = pad_crop(img, output_size=(512, 512, z_size_original))
         #
         label = resample(label, output_spacing=(inplane_spacing, inplane_spacing, z_spacing_original),
-                         interplator=sitk.sitkNearestNeighbor)
+                        interplator=sitk.sitkNearestNeighbor)
         label = pad_crop(label, output_size=(512, 512, z_size_original))
 
         uid = Parser.get_id_from_name(ct.stem)
         sitk.WriteImage(img, os.path.join(output_folder, 'case_' + str(uid).zfill(4) + '.nrrd'))
         sitk.WriteImage(label, os.path.join(output_folder, 'case_' + str(uid).zfill(4) + '_label.nrrd'), True)
-
         d.append((
             {
                 "case_uid": uid,

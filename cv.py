@@ -20,8 +20,8 @@ result = os.popen("docker ps -a").readlines()
 containers = []
 for l in result[1:]:
     line = l.strip("\n")
-if len(containers) > 1:
-    containers.append(line.split()[-1])
+    if 'cv_container' in line:
+        containers.append(line.split()[-1])
 
 def install():
     try:
@@ -73,8 +73,9 @@ def export():
 def reset():
     print("Resetting the cardiovision...")
     try:
-        os.system("docker stop cv_container")
-        os.system("docker rm cv_container")
+        if "cv_container" in containers:
+            os.system("docker stop cv_container")
+            os.system("docker rm cv_container")
     except:
         print("something went wrong, please try again or uninsall/install cardiovision")
 
@@ -100,5 +101,8 @@ elif arg.upper() == "EXPORT":
     export()
 elif arg.upper() == "PREDICT":
     predict()
+elif arg.upper() == "RESET":
+    reset()
+    install()
 elif arg.upper() == "UNINSTALL":
     uninstall()
