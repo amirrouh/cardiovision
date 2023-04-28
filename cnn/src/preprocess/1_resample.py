@@ -66,3 +66,4 @@ if __name__ == '__main__':
         ))
 
     pd.DataFrame(d).to_csv(os.path.join(sheets_folder, image_set + '.csv'), index=False)
+    print('resampling completed')

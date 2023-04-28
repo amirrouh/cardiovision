@@ -23,13 +23,10 @@ if __name__ == '__main__':
     df = pd.read_csv(os.path.join(sheets_folder, image_set + '.csv'))
 
     patients = df.case_uid.values
-    print(patients)
     kf = KFold(n_splits=7, shuffle=True)
     fold = 1
     d = list()
     for _, val_index in kf.split(patients):
-        print(fold)
-        print(val_index)
         for index in val_index:
             d.append(OrderedDict({"case_uid": patients[index],
                                   "fold": fold}))

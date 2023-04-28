@@ -47,6 +47,7 @@ def install():
 
 def import_data():
     print("Importing, augmenting, and preprocessing the training data ")
+    os.system("docker cp config.py cv_container:/home/app/config.py")
     os.system(f"docker cp {config.training_data_directory}/. cv_container:/home/data/training_data")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -i")
 
@@ -75,6 +76,7 @@ def reset():
     print("Resetting the cardiovision...")
     try:
         if "cv_container" in containers:
+            os.system("docker exec cv_container rm -rf /home/data/training_data/*")
             os.system("docker stop cv_container")
             os.system("docker rm cv_container")
     except:
@@ -94,6 +96,7 @@ arg = sys.argv[1]
 
 if arg.upper() == "INSTALL":
     install()
+    os.system('docker cp utils/config.py cv_container:/home/app/utils/config.py')
 elif arg.upper() == "IMPORT":
     import_data()
 elif arg.upper() == "TRAIN":
@@ -104,6 +107,6 @@ elif arg.upper() == "PREDICT":
     predict()
 elif arg.upper() == "RESET":
     reset()
-    install()
+    os.system('python cv.py install')
 elif arg.upper() == "UNINSTALL":
     uninstall()
