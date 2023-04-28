@@ -1,6 +1,5 @@
-output_dir = "/mnt/c/Users/SH1389/Documents/data/"
-training_dir = "/mnt/c/Users/SH1389/Documents/data/sample_data/training_data/"
-training_data_directory = "/mnt/c/Users/SH1389/Documents/data/sample_data/training_data/"
+output_dir = "/mnt/c/Users/SH1389/Documents/"
+training_data_directory = "/mnt/c/Users/SH1389/Documents/data/aorta/small_set/"
 input_file = "/mnt/c/Users/SH1389/Documents/data/aorta/validation_data/images/aCT29.nrrd"
 # input_file = "/mnt/c/Users/ae445/Downloads/resampled/resampled/aCT8.nrrd"
 
