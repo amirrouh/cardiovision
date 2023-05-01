@@ -75,7 +75,6 @@ def reset():
     print("Resetting the cardiovision...")
     try:
         if "cv_container" in containers:
-            os.system("docker exec cv_container rm -rf /home/data/training_data/*")
             os.system("docker stop cv_container")
             os.system("docker rm cv_container")
     except:
@@ -107,5 +106,6 @@ elif arg.upper() == "PREDICT":
 elif arg.upper() == "RESET":
     reset()
     os.system('python cv.py install')
+    os.system("docker exec cv_container rm -rf /home/data/training_data/*")
 elif arg.upper() == "UNINSTALL":
     uninstall()

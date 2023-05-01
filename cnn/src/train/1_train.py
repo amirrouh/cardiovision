@@ -1,3 +1,4 @@
+print('updated version 1.0')
 import os
 import sys
 
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     output_folder = os.path.join(models_folder, image_set + '_' + experiment)
     if not os.path.isdir(output_folder):
         os.mkdir(output_folder)
-
+    print('output folder')
     folds = sorted(os.listdir(input_folder))
     for fold in folds:
         for seed in range(17, 17 + n_ensembles):
@@ -43,6 +44,7 @@ if __name__ == '__main__':
                 continue
             print('running for fold {} seed {}'.format(fold, seed))
             output_fold_folder = os.path.join(output_folder, fold + '_' + str(seed))
+            print(f'output folder: {output_fold_folder}')
             if not os.path.isdir(output_fold_folder):
                 os.mkdir(output_fold_folder)
             cnn = UNet(n_classes=n_classes)
@@ -79,7 +81,6 @@ if __name__ == '__main__':
                 model.summary(print_fn=lambda x: fh.write(x + '\n'))
 
             # loss function
-
             d = DiceLoss(n_classes=n_classes, smooth=1)
             loss = d.loss
 
@@ -95,7 +96,7 @@ if __name__ == '__main__':
                           loss=loss,
                           metrics=[label_0_dice, label_1_dice])
             # model.metrics_names = ['loss', 'bg_dice', 'aorta']
-
+            print('fit model')
             model.fit(X, y,
                       batch_size=16,
                       epochs=1000,
