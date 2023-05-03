@@ -10,7 +10,7 @@ from keras.utils import plot_model
 np.random.seed(17)
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
-os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+#os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(this_directory, '..', '..', '..'))
@@ -36,15 +36,18 @@ if __name__ == '__main__':
     output_folder = os.path.join(models_folder, image_set + '_' + experiment)
     if not os.path.isdir(output_folder):
         os.mkdir(output_folder)
-    print('output folder')
     folds = sorted(os.listdir(input_folder))
     for fold in folds:
         for seed in range(17, 17 + n_ensembles):
             if int(fold + str(seed)) <419:
                 continue
+
             print('running for fold {} seed {}'.format(fold, seed))
             output_fold_folder = os.path.join(output_folder, fold + '_' + str(seed))
             print(f'output folder: {output_fold_folder}')
+
+            csv_logger = CSVLogger(os.path.join(output_fold_folder, 'log' + str(seed) + '.csv'))
+
             if not os.path.isdir(output_fold_folder):
                 os.mkdir(output_fold_folder)
             cnn = UNet(n_classes=n_classes)
@@ -55,10 +58,8 @@ if __name__ == '__main__':
             #
             X_val = np.load(os.path.join(input_fold_folder, 'X_validation.npy'))
             y_val = np.load(os.path.join(input_fold_folder, 'y_validation.npy'))
-            #
-            callbacks_list = list()
 
-            csv_logger = CSVLogger(os.path.join(output_fold_folder, 'log.csv'))
+            callbacks_list = list()
             callbacks_list.append(csv_logger)
 
             model_checkpoint = ModelCheckpoint(os.path.join(output_fold_folder, 'model_checkpoint.hdf5'),

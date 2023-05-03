@@ -13,7 +13,6 @@ sys.path.append(working_dir)
 
 import config
 
-
 @dataclass
 class FileFolders:
     folders = {

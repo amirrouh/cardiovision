@@ -47,7 +47,11 @@ def install():
 def import_data():
     print("Importing, augmenting, and preprocessing the training data ")
     os.system("docker cp config.py cv_container:/home/app/config.py")
-    os.system(f"docker cp {config.training_data_directory}/. cv_container:/home/data/training_data")
+    os.system("docker exec  cv_container mkdir /home/data/training_data")
+    os.system("docker exec  cv_container mkdir /home/data/training_data/images")
+    os.system("docker exec  cv_container mkdir /home/data/training_data/labels")
+    os.system(f"docker cp {config.training_data_directory}images/. cv_container:/home/data/training_data/images")
+    os.system(f"docker cp {config.training_data_directory}labels/. cv_container:/home/data/training_data/labels")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -i")
 
 def train():
@@ -75,6 +79,7 @@ def reset():
     print("Resetting the cardiovision...")
     try:
         if "cv_container" in containers:
+            os.system("docker exec cv_container rm -r /home/data/training_data")
             os.system("docker stop cv_container")
             os.system("docker rm cv_container")
     except:
@@ -106,6 +111,5 @@ elif arg.upper() == "PREDICT":
 elif arg.upper() == "RESET":
     reset()
     os.system('python cv.py install')
-    os.system("docker exec cv_container rm -rf /home/data/training_data/*")
 elif arg.upper() == "UNINSTALL":
     uninstall()

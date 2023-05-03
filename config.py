@@ -1,7 +1,10 @@
-output_dir = "/mnt/d/sandra/"
-training_data_directory = "/mnt/d/sandra/sample/"
-input_file = "/mnt/d/sandra/sample/images/aCT1.nrrd"
-# input_file = "/mnt/c/Users/ae445/Downloads/resampled/resampled/aCT8.nrrd"
+# output_dir = "/mnt/d/sandra/sample/"
+# is mounted to docker cv_container /home/data => choose empty folder
+output_dir = "/mnt/c/Users/SH1389/Documents/docker_files/"
+#training_data_directory = "/mnt/d/sandra/sample/"
+training_data_directory = "/mnt/c/Users/SH1389/Documents/data/training_data/"
+#input_file = "/mnt/d/sandra/sample/images/aCT1.nrrd"
+input_file = "/mnt/c/Users/SH1389/Documents/data/training_data/images/aCT1.nrrd"
 
 # component can be "aorta"; "lv"
 component = "aorta"
