@@ -12,7 +12,7 @@ sys.path.append(working_dir)
 from cnn.src.helpers.utils import resample, pad_crop
 from cnn.src.helpers.unet import UNet
 from utils.io import FileFolders
-from config import component
+from config import component 
 
 
 input_file = "/home/data/input_file.nrrd"

@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 X = np.expand_dims(X, axis=-1).astype(np.float32)
 
                 # y = np.concatenate((y, np.fliplr(y)), axis=0).\
-                y = y.astype(np.uint8)
+                y = y.astype(np.float32)
 
                 np.save(os.path.join(output_fold_folder, 'X_' + data_type + '.npy'), X)
                 np.save(os.path.join(output_fold_folder, 'y_' + data_type + '.npy'), y)

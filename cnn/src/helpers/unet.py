@@ -1,7 +1,7 @@
-from keras.layers import Input, Convolution2D, BatchNormalization, \
+from tensorflow.keras.layers import Input, Convolution2D, BatchNormalization, \
     Activation, MaxPooling2D, UpSampling2D, concatenate
-from keras.models import Model
-from keras.regularizers import l2
+from tensorflow.keras.models import Model
+from tensorflow.keras.regularizers import l2
 
 
 class UNet:
