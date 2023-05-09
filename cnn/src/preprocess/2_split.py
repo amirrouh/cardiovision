@@ -33,4 +33,5 @@ if __name__ == '__main__':
         fold += 1
     df = pd.DataFrame(d)
     df.loc[df.fold > 5, 'fold'] = -1
+    df.loc[df.fold < 5, 'fold'] = -1
     df.to_csv(os.path.join(sheets_folder, image_set + '_split.csv'), index=False)

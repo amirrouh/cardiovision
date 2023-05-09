@@ -23,11 +23,11 @@ conda deactivate
 
 # setting up cnn environment
 eval "$(conda shell.bash hook)"
-conda conda create --name cnn python=3.10 -y
+conda create --name cnn python=3.10 -y
 conda activate cnn
-conda install -c conda-forge tensorflow-gpu=2.11 -y
 conda install -c simpleitk simpleitk -y
 conda install -c conda-forge pydot=1.4.1 -y
+conda install -c conda-forge tensorflow-gpu=2.11.0 -y
 conda deactivate
 
 # setting up landmark environment
