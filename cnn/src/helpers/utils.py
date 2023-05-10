@@ -62,8 +62,6 @@ def pad_image(image, output_size):
     padding.SetConstant(float(np.amin(sitk.GetArrayFromImage(image))))
     return padding.Execute(image)
 
-
-
 class SegmentationQualityMetrics:
     """Code taken from https://github.com/hjkuijf/MRBrainS18 with minor refactoring"""
 

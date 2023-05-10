@@ -1,4 +1,4 @@
-print('updated version 2.1')
+print('updated version 2.2')
 import os
 import sys
 
@@ -23,10 +23,12 @@ arrays_folder = folders['cnn']['arrays']
 
 from cnn.src.helpers.custom_loss import DiceLoss, LabelDice
 from cnn.src.helpers.unet import UNet
+from cnn.src.helpers.data_generator import DataGenerator
 
 
 n_classes = 2
-n_ensembles = 5
+n_ensembles = 2
+
 
 if __name__ == '__main__':
     image_set = 'set_1'
@@ -39,7 +41,7 @@ if __name__ == '__main__':
     folds = sorted(os.listdir(input_folder))
     for fold in folds:
         for seed in range(17, 17 + n_ensembles):
-            if int(fold + str(seed)) <521:
+            if int(fold + str(seed)) <517:
                 continue
             print('running for fold {} seed {}'.format(fold, seed))
             output_fold_folder = os.path.join(output_folder, fold + '_' + str(seed))
@@ -66,13 +68,13 @@ if __name__ == '__main__':
 
             reduce_lr = ReduceLROnPlateau(monitor="val_loss",
                                           factor=0.8,
-                                          patience=10,
+                                          patience=20,
                                           min_delta=1e-3,
                                           min_lr=1e-6,
                                           verbose=1)
             callbacks_list.append(reduce_lr)
 
-            es = EarlyStopping(monitor='val_loss', min_delta=1e-4, patience=20, verbose=1)
+            es = EarlyStopping(monitor='val_loss', min_delta=1e-4, patience=30, verbose=1)
             callbacks_list.append(es)
 
             plot_model(model, to_file=os.path.join(output_fold_folder, 'model.png'), show_shapes=True)
@@ -88,7 +90,7 @@ if __name__ == '__main__':
             label_0_dice = LabelDice(label_value=0).dice
             label_1_dice = LabelDice(label_value=1).dice
 
-            optimizer = Adam(learning_rate=5e-3)
+            optimizer = Adam(learning_rate=1e-3)
 
             # compiling model
             print('compiling model ...')
@@ -98,10 +100,19 @@ if __name__ == '__main__':
                           )
             #model.metrics_names = ['loss', 'bg_dice']
             print('fit model')
-            model.fit(X, y,
-                      batch_size=16,
-                      epochs=150,
+
+            train_gen = DataGenerator(X, y, 16)
+            # test_gen = DataGenerator(X_val, y_val, 32)
+            model.fit(train_gen,
+                      epochs=1000,
                       verbose=True,
                       shuffle=True,
                       callbacks=callbacks_list,
                       validation_data=[X_val, y_val])
+            # model.fit(X, y,
+            #           batch_size=16,
+            #           epochs=150,
+            #           verbose=True,
+            #           shuffle=True,
+            #           callbacks=callbacks_list,
+            #           validation_data=[X_val, y_val])
