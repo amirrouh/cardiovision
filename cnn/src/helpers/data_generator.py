@@ -24,6 +24,6 @@ class DataGenerator(Sequence):
                 batch_x = x
                 batch_y = y
             else:
-                batch_x = np.concatenate((batch_x, x), axis=0)
-                batch_y = np.concatenate((batch_y, y), axis=0)
+                batch_x = np.concatenate((batch_x, x), axis=3)
+                batch_y = np.concatenate((batch_y, y), axis=3)
         return batch_x, batch_y

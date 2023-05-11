@@ -46,6 +46,10 @@ if __name__ == '__main__':
                 os.mkdir(os.path.join(output_fold_folder,'X_train/'))
             if not os.path.isdir(os.path.join(output_fold_folder, 'y_train/')):
                 os.mkdir(os.path.join(output_fold_folder,'y_train/'))
+            if not os.path.isdir(os.path.join(output_fold_folder,'X_validation/')):
+                os.mkdir(os.path.join(output_fold_folder,'X_validation/'))
+            if not os.path.isdir(os.path.join(output_fold_folder, 'y_validation/')):
+                os.mkdir(os.path.join(output_fold_folder,'y_validation/'))
             for data_type in ['train', 'validation']:
                 if data_type == 'train':
                     df_filtered = df[df.fold != fold]
@@ -86,6 +90,7 @@ if __name__ == '__main__':
                             y = label_nda_multi_class.astype(np.float32)
                             np.save(os.path.join(output_fold_folder, 'X_train/X_' + data_type + str(name_idx[name_counter, counter]).zfill(4) + '.npy'), X)
                             np.save(os.path.join(output_fold_folder, 'y_train/y_' + data_type + str(name_idx[name_counter, counter]).zfill(4) + '.npy'), y)
+                        name_counter +=1
                 else:
                     df_filtered = df[df.fold == fold]
                     name_idx = np.arange(len(df_filtered))
