@@ -23,11 +23,11 @@ arrays_folder = folders['cnn']['arrays']
 
 from cnn.src.helpers.custom_loss import DiceLoss, LabelDice
 from cnn.src.helpers.unet import UNet
-from cnn.src.helpers.data_generator import DataGenerator
+from cnn.src.helpers.data_generator import DataGenerator, DataGenerator2
 
 
 n_classes = 2
-n_ensembles = 2
+n_ensembles = 1
 
 
 if __name__ == '__main__':
@@ -51,8 +51,6 @@ if __name__ == '__main__':
             cnn = UNet(n_classes=n_classes)
             model = cnn.model()
             input_fold_folder = os.path.join(input_folder, fold)
-            X = np.load(os.path.join(input_fold_folder, 'X_train.npy'))
-            y = np.load(os.path.join(input_fold_folder, 'y_train.npy'))
             #
             X_val = np.load(os.path.join(input_fold_folder, 'X_validation.npy'))
             y_val = np.load(os.path.join(input_fold_folder, 'y_validation.npy'))
@@ -101,10 +99,13 @@ if __name__ == '__main__':
             #model.metrics_names = ['loss', 'bg_dice']
             print('fit model')
 
-            train_gen = DataGenerator(X, y, 16)
-            # test_gen = DataGenerator(X_val, y_val, 32)
+            train_gen = DataGenerator(input_fold_folder,'train', 32)
+
+            # X_train = np.load(os.path.join(input_fold_folder, 'X_train.npy'))
+            # y_train = np.load(os.path.join(input_fold_folder, 'y_train.npy'))
+            # train_gen = DataGenerator2(X_train, y_train, 16)
             model.fit(train_gen,
-                      epochs=1000,
+                      epochs=300,
                       verbose=True,
                       shuffle=True,
                       callbacks=callbacks_list,
