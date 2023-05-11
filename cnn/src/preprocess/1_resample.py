@@ -43,16 +43,14 @@ if __name__ == '__main__':
         label = sitk.ReadImage(str(lbls[i]))
 
         inplane_spacing = 0.35
-        z_spacing_original = img.GetSpacing()[2]
-        z_size_original = img.GetSize()[2]
-
-        img = resample(img, output_spacing=(inplane_spacing, inplane_spacing, z_spacing_original),
+        z_spacing = 0.5
+        img = resample(img, output_spacing=(inplane_spacing, inplane_spacing, z_spacing),
                     interplator=sitk.sitkLinear)
-        img = pad_crop(img, output_size=(512, 512, z_size_original))
+        img = pad_crop(img, output_size=(512, 512, 256))
         #
-        label = resample(label, output_spacing=(inplane_spacing, inplane_spacing, z_spacing_original),
+        label = resample(label, output_spacing=(inplane_spacing, inplane_spacing, z_spacing),
                         interplator=sitk.sitkNearestNeighbor)
-        label = pad_crop(label, output_size=(512, 512, z_size_original))
+        label = pad_crop(label, output_size=(512, 512, 256))
 
         uid = Parser.get_id_from_name(ct.stem)
         sitk.WriteImage(img, os.path.join(output_folder, 'case_' + str(uid).zfill(4) + '.nrrd'))
@@ -60,7 +58,7 @@ if __name__ == '__main__':
         d.append((
             {
                 "case_uid": uid,
-                "slices": z_size_original
+                "samples": 1
             }
 
         ))

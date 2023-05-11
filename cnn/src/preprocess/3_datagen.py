@@ -61,7 +61,7 @@ if __name__ == '__main__':
                         # data augmentation
                         img_aug, label_aug = AugmentImage.augment_image(img, 
                                                                         ((0,0), (0,0), (-np.pi, np.pi)), 
-                                                                        ((-1, 1), (-1, 1), (0, 0)), 
+                                                                        ((-5, 5), (-5, 5), (-5, 5)), 
                                                                         label, 5, np.amin(sitk.GetArrayFromImage(img)))
                         
                         for counter in range(len(img_aug)+1):
@@ -80,50 +80,17 @@ if __name__ == '__main__':
                                 tmp[tmp != i] = 255
                                 tmp[tmp == i] = 1
                                 label_nda_multi_class[..., i] = tmp
-                            label_nda_multi_class[label_nda_multi_class == 255] = 0
-
-                            # if name_counter == 0:
-                            #     X = img_nda
-                            #     y = label_nda_multi_class
-                            #     name_counter = 1
-                            # else:
-                            #     X = np.concatenate((X, img_nda), axis=0)
-                            #     y = np.concatenate((y, label_nda_multi_class), axis=0)
-                        
-                    # X = np.expand_dims(X, axis=-1).astype(np.float32)
-
-                    # # y = np.concatenate((y, np.fliplr(y)), axis=0).\
-                    # y = y.astype(np.float32)
-
-                    # np.save(os.path.join(output_fold_folder, 'X_' + data_type + '.npy'), X)
-                    # np.save(os.path.join(output_fold_folder, 'y_' + data_type + '.npy'), y)
-                            
+                            label_nda_multi_class[label_nda_multi_class == 255] = 0                            
                             
                             X = np.expand_dims(img_nda, axis=-1).astype(np.float32)
                             y = label_nda_multi_class.astype(np.float32)
                             np.save(os.path.join(output_fold_folder, 'X_train/X_' + data_type + str(name_idx[name_counter, counter]).zfill(4) + '.npy'), X)
                             np.save(os.path.join(output_fold_folder, 'y_train/y_' + data_type + str(name_idx[name_counter, counter]).zfill(4) + '.npy'), y)
-                            
-                            if X.shape[0] != y.shape[0]:
-                                print(f'error for {row.case_uid}, shapes do not match')
-                            
-                            nr_slices_arr = np.repeat(np.array([name_idx[name_counter, counter]]), X.shape[0])
-                            nr_slices_arr = nr_slices_arr.reshape((X.shape[0], 1))
-                            nr_slices_arr = np.concatenate((nr_slices_arr, np.arange(X.shape[0]).reshape((X.shape[0], 1))), axis=1)
-                            if counter == 0 and name_counter == 0:
-                                nr_slices = nr_slices_arr
-                            else:
-                                nr_slices = np.concatenate((nr_slices, nr_slices_arr), axis = 0)
-                        os.system(f'rm {img_path}')
-                        label_path = img_path.replace('.nrrd', '_label.nrrd')
-                        os.system(f'rm {label_path}')
-                        name_counter += 1
-                    nr_slices = nr_slices[nr_slices[:, 1].argsort()]
-                    nr_slices = nr_slices[nr_slices[:, 0].argsort(kind='mergesort')]
-                    np.save(os.path.join(output_fold_folder, 'X_train_slices.npy'), nr_slices)
                 else:
                     df_filtered = df[df.fold == fold]
-                    counter = 0
+                    name_idx = np.arange(len(df_filtered))
+                    name_idx = name_idx.reshape(len(df_filtered))
+                    name_counter = 0
                     for index, row in tqdm(df_filtered.iterrows(), total=len(df_filtered)):
                         img_path = os.path.join(image_folder, 'case_' + str(row.case_uid).zfill(4) + '.nrrd')
                         img = sitk.ReadImage(img_path)
@@ -142,20 +109,12 @@ if __name__ == '__main__':
                             label_nda_multi_class[..., i] = tmp
                         label_nda_multi_class[label_nda_multi_class == 255] = 0
 
-                        if counter == 0:
-                            X = img_nda
-                            y = label_nda_multi_class
-                        else:
-                            X = np.concatenate((X, img_nda), axis=0)
-                            y = np.concatenate((y, label_nda_multi_class), axis=0)
-                        counter += 1
+                        X = img_nda
+                        y = label_nda_multi_class
 
-                    # todo: 35 set1 did not fit into the memeroy
-                    # X = np.concatenate((X, np.fliplr(X)), axis=0)
-                    X = np.expand_dims(X, axis=-1).astype(np.float32)
+                        X = np.expand_dims(X, axis=-1).astype(np.float32)
+                        y = y.astype(np.float32)
 
-                    # y = np.concatenate((y, np.fliplr(y)), axis=0).\
-                    y = y.astype(np.float32)
-
-                    np.save(os.path.join(output_fold_folder, 'X_' + data_type + '.npy'), X)
-                    np.save(os.path.join(output_fold_folder, 'y_' + data_type + '.npy'), y)
+                        np.save(os.path.join(output_fold_folder, 'X_validation/X_' + data_type + str(name_idx[name_counter]).zfill(4) + '.npy'), X)
+                        np.save(os.path.join(output_fold_folder, 'y_validation/y_' + data_type + str(name_idx[name_counter]).zfill(4) + '.npy'), y)
+                        name_counter += 1

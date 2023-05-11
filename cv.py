@@ -30,14 +30,14 @@ def install():
         if "macOS" in machine and "arm" in machine:
             # Neccessary environment variable for apple sillicon processors
             os.environ['DOCKER_DEFAULT_PLATFORM'] = "linux/amd64"
-        if "cv_image" not in images:
-            os.system("docker build -t cv_image .")
+        if "cv_image_3d" not in images:
+            os.system("docker build -t cv_image_3d .")
         if container_name not in containers:
             if config.GPU:
-                os.system(f"docker run --gpus all -d -t --name {container_name} -v {config.output_dir}/:/home/data cv_image")
+                os.system(f"docker run --gpus all -d -t --name {container_name} -v {config.output_dir}/:/home/data cv_image_3d")
             else:
-                os.system(f"docker run -d -t --name {container_name} -v {config.output_dir}/:/home/data cv_image")
-        if "cv_image" in images and container_name in containers:
+                os.system(f"docker run -d -t --name {container_name} -v {config.output_dir}/:/home/data cv_image_3d")
+        if "cv_image_3d" in images and container_name in containers:
             print("Cardiovision is installed successfully")           
         logging.debug("Cardiovision is installed")
     except Exception as e:
@@ -92,7 +92,7 @@ def uninstall():
         os.system("docker system prune -a")
         print("Cardiovision successfully ininstalled.")
     except:
-        print(f"Something weng wrong please try to remove cv_image and {container_name} using docker app")
+        print(f"Something weng wrong please try to remove cv_image_3d and {container_name} using docker app")
 
 
 arg = sys.argv[1]
