@@ -51,9 +51,6 @@ if __name__ == '__main__':
             cnn = UNet(n_classes=n_classes)
             model = cnn.model()
             input_fold_folder = os.path.join(input_folder, fold)
-            #
-            X_val = np.load(os.path.join(input_fold_folder, 'X_validation.npy'))
-            y_val = np.load(os.path.join(input_fold_folder, 'y_validation.npy'))
 
             callbacks_list = list()
 
@@ -99,21 +96,11 @@ if __name__ == '__main__':
             #model.metrics_names = ['loss', 'bg_dice']
             print('fit model')
 
-            train_gen = DataGenerator(input_fold_folder,'train', 32)
-
-            # X_train = np.load(os.path.join(input_fold_folder, 'X_train.npy'))
-            # y_train = np.load(os.path.join(input_fold_folder, 'y_train.npy'))
-            # train_gen = DataGenerator2(X_train, y_train, 16)
+            train_gen = DataGenerator(input_fold_folder,'train', 2)
+            validation_gen = DataGenerator(input_fold_folder, 'validation', 2)
             model.fit(train_gen,
                       epochs=300,
                       verbose=True,
                       shuffle=True,
                       callbacks=callbacks_list,
-                      validation_data=[X_val, y_val])
-            # model.fit(X, y,
-            #           batch_size=16,
-            #           epochs=150,
-            #           verbose=True,
-            #           shuffle=True,
-            #           callbacks=callbacks_list,
-            #           validation_data=[X_val, y_val])
+                      validation_data=validation_gen)
