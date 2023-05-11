@@ -23,14 +23,14 @@ conda deactivate
 
 # setting up cnn environment
 eval "$(conda shell.bash hook)"
-conda install mamba -n base -c conda-forge
-mamba create -n cnn python=3.10 "tensorflow-gpu=2.11.0" "simpleitk=2.2.1" "pydot=1.4.2" -c conda-forge -c simpleitk -y
-# conda create --name cnn python=3.10.10 -c conda-forge -y
-# conda activate cnn
-# conda install -c conda-forge tensorflow-gpu=2.11.0 -y
-# conda install -c simpleitk simpleitk=2.2.1 -y
-# conda install -c conda-forge pydot=1.4.2 -ys
-# conda deactivate
+# conda install mamba -n base -c conda-forge
+# mamba create -n cnn python=3.10 "tensorflow-gpu=2.11.0" "simpleitk=2.2.1" "pydot=1.4.2" -c conda-forge -c simpleitk -y
+conda create --name cnn python=3.10 -y
+conda activate cnn
+pip install tensorflow-gpu==2.11.0
+conda install -c simpleitk simpleitk=2.2.1 -y
+conda install -c conda-forge pydot=1.4.2 -y
+conda deactivate
 
 # setting up landmark environment
 eval "$(conda shell.bash hook)"
