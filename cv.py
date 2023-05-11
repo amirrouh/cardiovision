@@ -48,11 +48,11 @@ def install():
 def import_data():
     print("Importing, augmenting, and preprocessing the training data ")
     os.system(f"docker cp config.py {container_name}:/home/app/config.py")
-    # os.system(f"docker exec  {container_name} mkdir /home/data/training_data")
-    # os.system(f"docker exec  {container_name} mkdir /home/data/training_data/images")
-    # os.system(f"docker exec  {container_name} mkdir /home/data/training_data/labels")
-    # os.system(f"docker cp {config.training_data_directory}images/. {container_name}:/home/data/training_data/images")
-    # os.system(f"docker cp {config.training_data_directory}labels/. {container_name}:/home/data/training_data/labels")
+    os.system(f"docker exec  {container_name} mkdir /home/data/training_data")
+    os.system(f"docker exec  {container_name} mkdir /home/data/training_data/images")
+    os.system(f"docker exec  {container_name} mkdir /home/data/training_data/labels")
+    os.system(f"docker cp {config.training_data_directory}images/. {container_name}:/home/data/training_data/images")
+    os.system(f"docker cp {config.training_data_directory}labels/. {container_name}:/home/data/training_data/labels")
     os.system(f"docker exec {container_name} bash /home/app/scripts/cardiovision.sh -i")
 
 def train():

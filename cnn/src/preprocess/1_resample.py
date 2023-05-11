@@ -42,7 +42,7 @@ if __name__ == '__main__':
         img = sitk.ReadImage(str(ct))
         label = sitk.ReadImage(str(lbls[i]))
 
-        inplane_spacing = 0.2
+        inplane_spacing = 0.35
         z_spacing_original = img.GetSpacing()[2]
         z_size_original = img.GetSize()[2]
 

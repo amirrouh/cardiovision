@@ -114,6 +114,9 @@ if __name__ == '__main__':
                                 nr_slices = nr_slices_arr
                             else:
                                 nr_slices = np.concatenate((nr_slices, nr_slices_arr), axis = 0)
+                        os.system(f'rm {img_path}')
+                        label_path = img_path.replace('.nrrd', '_label.nrrd')
+                        os.system(f'rm {label_path}')
                         name_counter += 1
                     nr_slices = nr_slices[nr_slices[:, 1].argsort()]
                     nr_slices = nr_slices[nr_slices[:, 0].argsort(kind='mergesort')]

@@ -27,6 +27,12 @@ eval "$(conda shell.bash hook)"
 # mamba create -n cnn python=3.10 "tensorflow-gpu=2.11.0" "simpleitk=2.2.1" "pydot=1.4.2" -c conda-forge -c simpleitk -y
 conda create --name cnn python=3.10 -y
 conda activate cnn
+conda install -c conda-forge cudatoolkit=11.8.0
+pip install nvidia-cudnn-cu11==8.6.0.163
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+echo 'CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+source $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
 pip install tensorflow-gpu==2.11.0
 conda install -c simpleitk simpleitk=2.2.1 -y
 conda install -c conda-forge pydot=1.4.2 -y
