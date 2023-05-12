@@ -18,7 +18,7 @@ class DataGenerator(Sequence):
         return int(np.ceil(len(self.x) / float(self.batch_size)))
 
     def __getitem__(self, idx):
-        for i in range(self.batch_size):
+        for i in range(min(self.batch_size, len(self.x[idx*self.batch_size:idx*self.batch_size+self.batch_size]))):
             if self.data_type == 'train':
                 x = np.load(os.path.join(self.set_dir, 'X_train/', self.x[idx*self.batch_size+i]))
                 y = np.load(os.path.join(self.set_dir, 'y_train/', self.y[idx*self.batch_size+i]))

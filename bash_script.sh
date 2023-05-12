@@ -36,6 +36,8 @@ source $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
 pip install tensorflow-gpu==2.11.0
 conda install -c simpleitk simpleitk=2.2.1 -y
 conda install -c conda-forge pydot=1.4.2 -y
+conda install scipy -y
+conda install chardet -y
 conda deactivate
 
 # setting up landmark environment

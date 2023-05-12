@@ -15,6 +15,8 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 this_directory = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(this_directory, '..', '..', '..'))
 
+from config import component
+
 from utils.io import FileFolders as ff
 folders = ff.folders
 
@@ -27,7 +29,8 @@ from cnn.src.helpers.data_generator import DataGenerator
 
 
 n_classes = 2
-n_ensembles = 1
+n_ensembles = 2
+val_loss = 0
 
 
 if __name__ == '__main__':
@@ -62,14 +65,14 @@ if __name__ == '__main__':
             callbacks_list.append(model_checkpoint)
 
             reduce_lr = ReduceLROnPlateau(monitor="val_loss",
-                                          factor=0.8,
-                                          patience=20,
+                                          factor=0.9,
+                                          patience=10,
                                           min_delta=1e-3,
-                                          min_lr=1e-6,
+                                          min_lr=1e-5,
                                           verbose=1)
             callbacks_list.append(reduce_lr)
 
-            es = EarlyStopping(monitor='val_loss', min_delta=1e-4, patience=30, verbose=1)
+            es = EarlyStopping(monitor='val_loss', min_delta=1e-4, patience=20, verbose=1)
             callbacks_list.append(es)
 
             plot_model(model, to_file=os.path.join(output_fold_folder, 'model.png'), show_shapes=True)
@@ -85,7 +88,7 @@ if __name__ == '__main__':
             label_0_dice = LabelDice(label_value=0).dice
             label_1_dice = LabelDice(label_value=1).dice
 
-            optimizer = Adam(learning_rate=1e-3)
+            optimizer = Adam(learning_rate=2e-3)
 
             # compiling model
             print('compiling model ...')
@@ -96,11 +99,22 @@ if __name__ == '__main__':
             #model.metrics_names = ['loss', 'bg_dice']
             print('fit model')
 
-            train_gen = DataGenerator(input_fold_folder,'train', 1)
-            validation_gen = DataGenerator(input_fold_folder, 'validation', 1)
+            train_gen = DataGenerator(input_fold_folder,'train', 4)
+            validation_gen = DataGenerator(input_fold_folder, 'validation', 4)
             model.fit(train_gen,
-                      epochs=300,
+                      epochs=50,
                       verbose=True,
                       shuffle=True,
                       callbacks=callbacks_list,
                       validation_data=validation_gen)
+
+            log_loss = np.nanmin(np.genfromtxt(os.path.join(output_fold_folder, 'log.csv'), delimiter=',')[:,4])
+            if log_loss < val_loss:
+                i_path = os.path.join(output_fold_folder, 'model_checkpoint.hdf5')
+                o_path = os.path.join(os.path.join(this_directory, '..', '..', '..'),'cnn/checkpoints', f'{component}.hdf5')
+                os.system(f'cp {i_path} {o_path}')
+                val_loss = log_loss
+                val_fold = fold
+                val_seed = seed
+
+    print(f'training ended with validation loss {val_loss} in fold {val_fold}and seed {val_seed}')

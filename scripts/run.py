@@ -19,7 +19,7 @@ excludes = [
 ]
 
 # add excludes if you want to keep the excludes folders intact
-Functions.refresh()
+# Functions.refresh()
 
 if component == 'aorta':
     runs = {

@@ -103,12 +103,15 @@ class DetectLandmarks:
         
 
         if not os.path.isfile(files['indices']):
-            
+            coronaries_idx = None
             coronaries_candidates = argrelextrema(np.array(circle_similarity_reverse), np.less, order=2)[0]
             for i in coronaries_candidates:
                 if circle_similarity_reverse[i] < triangle_similarity_reverse[i]:
                     coronaries_idx = n_slides - i
-          
+
+            if coronaries_idx == None:
+                raise ValueError('None Coronaries found, landmark prediction cannot proceed')
+
             _aorta_areas = aorta_areas.copy()
             _aorta_areas.reverse()
             _slope = Math.calc_avg_slope(_aorta_areas, 10)
