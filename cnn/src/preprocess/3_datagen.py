@@ -8,6 +8,7 @@ import pandas as pd
 from tqdm import tqdm
 
 np.random.seed(17)
+os.environ['PYTHONHASHSEED']=str(17)
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(this_directory, '..', '..', '..'))
@@ -22,6 +23,7 @@ arrays_folder = folders['cnn']['arrays']
 images_folder = folders['cnn']['images']
 
 n_classes = 2
+
 if __name__ == '__main__':
     image_set = 'set_1'
 
@@ -65,7 +67,7 @@ if __name__ == '__main__':
                         # data augmentation
                         img_aug, label_aug = AugmentImage.augment_image(img, 
                                                                         ((0,0), (0,0), (-np.pi, np.pi)), 
-                                                                        ((-5, 5), (-5, 5), (-5, 5)), 
+                                                                        ((-1, 1), (-1, 1), (0, 0)), 
                                                                         label, 5, np.amin(sitk.GetArrayFromImage(img)))
                         
                         for counter in range(len(img_aug)+1):

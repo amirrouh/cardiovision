@@ -23,7 +23,7 @@ if __name__ == '__main__':
     df = pd.read_csv(os.path.join(sheets_folder, image_set + '.csv'))
 
     patients = df.case_uid.values
-    kf = KFold(n_splits=7, shuffle=True)
+    kf = KFold(n_splits=7, shuffle=False, random_state=17)
     fold = 1
     d = list()
     for _, val_index in kf.split(patients):

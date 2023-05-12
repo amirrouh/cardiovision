@@ -2,6 +2,9 @@ import random
 import numpy as np
 import SimpleITK as sitk
 
+random.seed(17)
+np.random.seed(17)
+
 class AugmentImage():
     def __init__(self) -> None:
         pass
