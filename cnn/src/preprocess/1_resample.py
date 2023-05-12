@@ -43,14 +43,14 @@ if __name__ == '__main__':
         label = sitk.ReadImage(str(lbls[i]))
 
         inplane_spacing = 0.35
-        z_spacing = 0.5
+        z_spacing = 4.8
         img = resample(img, output_spacing=(inplane_spacing, inplane_spacing, z_spacing),
                     interplator=sitk.sitkLinear)
-        img = pad_crop(img, output_size=(512, 512, 256))
+        img = pad_crop(img, output_size=(512, 512, 32))
         #
         label = resample(label, output_spacing=(inplane_spacing, inplane_spacing, z_spacing),
                         interplator=sitk.sitkNearestNeighbor)
-        label = pad_crop(label, output_size=(512, 512, 256))
+        label = pad_crop(label, output_size=(512, 512, 32))
 
         uid = Parser.get_id_from_name(ct.stem)
         sitk.WriteImage(img, os.path.join(output_folder, 'case_' + str(uid).zfill(4) + '.nrrd'))

@@ -87,7 +87,9 @@ if __name__ == '__main__':
                             label_nda_multi_class[label_nda_multi_class == 255] = 0                            
                             
                             X = np.expand_dims(img_nda, axis=-1).astype(np.float32)
+                            X = np.expand_dims(X, axis=0)
                             y = label_nda_multi_class.astype(np.float32)
+                            y = np.expand_dims(y, axis=0)
                             np.save(os.path.join(output_fold_folder, 'X_train/X_' + data_type + str(name_idx[name_counter, counter]).zfill(4) + '.npy'), X)
                             np.save(os.path.join(output_fold_folder, 'y_train/y_' + data_type + str(name_idx[name_counter, counter]).zfill(4) + '.npy'), y)
                         name_counter +=1
@@ -114,11 +116,11 @@ if __name__ == '__main__':
                             label_nda_multi_class[..., i] = tmp
                         label_nda_multi_class[label_nda_multi_class == 255] = 0
 
-                        X = img_nda
-                        y = label_nda_multi_class
-
-                        X = np.expand_dims(X, axis=-1).astype(np.float32)
-                        y = y.astype(np.float32)
+ 
+                        X = np.expand_dims(img_nda, axis=-1).astype(np.float32)
+                        X = np.expand_dims(X, axis=0)
+                        y = label_nda_multi_class.astype(np.float32)
+                        y = np.expand_dims(y, axis=0)
 
                         np.save(os.path.join(output_fold_folder, 'X_validation/X_' + data_type + str(name_idx[name_counter]).zfill(4) + '.npy'), X)
                         np.save(os.path.join(output_fold_folder, 'y_validation/y_' + data_type + str(name_idx[name_counter]).zfill(4) + '.npy'), y)

@@ -23,7 +23,7 @@ arrays_folder = folders['cnn']['arrays']
 
 from cnn.src.helpers.custom_loss import DiceLoss, LabelDice
 from cnn.src.helpers.unet import UNet
-from cnn.src.helpers.data_generator import DataGenerator, DataGenerator2
+from cnn.src.helpers.data_generator import DataGenerator
 
 
 n_classes = 2
@@ -96,8 +96,8 @@ if __name__ == '__main__':
             #model.metrics_names = ['loss', 'bg_dice']
             print('fit model')
 
-            train_gen = DataGenerator(input_fold_folder,'train', 2)
-            validation_gen = DataGenerator(input_fold_folder, 'validation', 2)
+            train_gen = DataGenerator(input_fold_folder,'train', 1)
+            validation_gen = DataGenerator(input_fold_folder, 'validation', 1)
             model.fit(train_gen,
                       epochs=300,
                       verbose=True,

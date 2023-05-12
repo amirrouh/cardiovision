@@ -38,8 +38,8 @@ class UNet:
         conv1 = self.conv_bn_relu(conv1, filter_factor * 8, 3, 3, 3)
         pool1 = MaxPooling3D(pool_size=(2, 2, 2))(conv1)
 
-        conv2 = self.conv_bn_relu(pool1, filter_factor * 16, 3, 3)
-        conv2 = self.conv_bn_relu(conv2, filter_factor * 16, 3, 3)
+        conv2 = self.conv_bn_relu(pool1, filter_factor * 16, 3, 3, 3)
+        conv2 = self.conv_bn_relu(conv2, filter_factor * 16, 3, 3, 3)
         pool2 = MaxPooling3D(pool_size=(2, 2, 2))(conv2)
 
         conv3 = self.conv_bn_relu(pool2, filter_factor * 32, 3, 3, 3)
@@ -48,12 +48,12 @@ class UNet:
 
         conv4 = self.conv_bn_relu(pool3, filter_factor * 64, 3, 3, 3)
         conv4 = self.conv_bn_relu(conv4, filter_factor * 64, 3, 3, 3)
-        pool4 = MaxPooling3D(pool_size=(4, 4, 4))(conv4)
+        pool4 = MaxPooling3D(pool_size=(2, 4, 4))(conv4)
 
         conv5 = self.conv_bn_relu(pool4, filter_factor * 128, 3, 3, 3)
         conv5 = self.conv_bn_relu(conv5, filter_factor * 128, 3, 3, 3)
 
-        up6 = concatenate([UpSampling3D(size=(4, 4, 4))(conv5), conv4], axis=-1)
+        up6 = concatenate([UpSampling3D(size=(2, 4, 4))(conv5), conv4], axis=-1)
         conv6 = self.conv_bn_relu(up6, filter_factor * 64, 3, 3, 3)
         conv6 = self.conv_bn_relu(conv6, filter_factor * 64, 3, 3, 3)
 
@@ -73,7 +73,7 @@ class UNet:
         return conv10
 
     def model(self):
-        image_1 = Input((512, 512, 212))
+        image_1 = Input((32, 512, 512, 1))
         non_linearity_output = self.u_route(image_1)
         model = Model(inputs=image_1, outputs=non_linearity_output)
         return model
