@@ -92,7 +92,7 @@ if __name__ == '__main__':
             label_0_dice = LabelDice(label_value=0).dice
             label_1_dice = LabelDice(label_value=1).dice
 
-            optimizer = Adam(learning_rate=2e-3)
+            optimizer = Adam(learning_rate=1e-2)
 
             # compiling model
             print('compiling model ...')
@@ -102,8 +102,8 @@ if __name__ == '__main__':
                           )
             #model.metrics_names = ['loss', 'foreground_dice']
 
-            train_gen = DataGenerator(input_fold_folder,'train', 4)
-            validation_gen = DataGenerator(input_fold_folder, 'validation', 4)
+            train_gen = DataGenerator(input_fold_folder,'train', 5)
+            validation_gen = DataGenerator(input_fold_folder, 'validation', 5)
 
             print('fit model ...')
             model.fit(train_gen,

@@ -28,7 +28,7 @@ class DiceLoss:
         return dice
 
     def loss(self, y_true, y_pred):
-        loss = 0
-        for i in range(self.n_classes):
-            loss -= self.dice(y_true[..., i], y_pred[..., i])
-        return loss
+        # loss = 0
+        # for i in range(1, self.n_classes):
+        #     loss -= self.dice(y_true[..., i], y_pred[..., i])
+        return -self.dice(y_true[..., 1], y_pred[..., 1])

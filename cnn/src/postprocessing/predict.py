@@ -23,11 +23,11 @@ sample_img = sitk.ReadImage(input_file)
 sample_img.SetDirection((1, 0, 0, 0, 1, 0, 0, 0, 1))
 sample_img.SetOrigin((0, 0, 0))
 
-inplane_spacing = 0.35
+inplane_spacing = 0.75
 z_spacing = 1
 sample_img = resample(sample_img, output_spacing=(inplane_spacing, inplane_spacing, z_spacing),
                interplator=sitk.sitkLinear)
-sample_img = pad_crop(sample_img, output_size=(256, 256, 64))
+sample_img = pad_crop(sample_img, output_size=(256, 256, 128))
 
 
 

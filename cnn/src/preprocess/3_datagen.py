@@ -66,8 +66,8 @@ if __name__ == '__main__':
                         
                         # data augmentation
                         img_aug, label_aug = AugmentImage.augment_image(img, 
-                                                                        ((0,0), (0,0), (-np.pi, np.pi)), 
-                                                                        ((-1, 1), (-1, 1), (0, 0)), 
+                                                                        ((0,0), (0,0), (-np.pi/8, np.pi/8)), 
+                                                                        ((-2, 2), (-2, 2), (0, 0)), 
                                                                         label, 5, np.amin(sitk.GetArrayFromImage(img)))
                         
                         for counter in range(len(img_aug)+1):

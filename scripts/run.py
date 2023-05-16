@@ -24,10 +24,10 @@ excludes = [
 if component == 'aorta':
     runs = {
         'cnn': '-predict',
-        'landmark': '',
-        'valve': '',
-        'calcification': '',
-        'analysis': '',
+        # 'landmark': '',
+        # 'valve': '',
+        # 'calcification': '',
+        # 'analysis': '',
         'report': '',
     }
 
