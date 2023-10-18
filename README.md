@@ -6,6 +6,7 @@ Cardiovision (CV) is a user-friendly cross-platform application for medical imag
 - At least 30 GB free storage for cardiovision.
 - At least 16 GB RAM is recommended.
 - Nvidia GPU is not necessary but highly recommended.
+- A free dockerhub account (you should be logged in before moving forward)
 
 
 # Directory Structure For Training
