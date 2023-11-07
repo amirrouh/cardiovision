@@ -36,7 +36,7 @@ as long as the numbers are the same for any corresponding image and label.
 > export COMPOSE_DOCKER_CLI_BUILD=0
 
 
-- Note: Make sure the defined files and directories in the "/ui/config.py" file exist and use the proper path format (For unix systems such as macos and linux, use "/" and in windows systems use "\\\\" to refer to the subdirectories.) 
+- Note: Make sure the defined files and directories in the "config.py" file exist and use the proper path format (For unix systems such as macos and linux, use "/" and in windows systems use "\\\\" to refer to the subdirectories.) 
 
 - Making sure the docker image and containers are installed and running properly. This can be done either within the docker desktop app or via the command line. For examle, for a unix terminal (MAC, LINUX, Windows WSL2) the command "docker ps" should return the info including the "cv_container" name.
 

@@ -9,7 +9,7 @@ from tqdm import tqdm
 this_directory = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(this_directory, '..', '..', '..'))
 
-from utils.config import training_dir
+from config import training_data_directory as training_dir
 from cnn.src.helpers.utils import resample, pad_crop, Parser
 from utils.io import FileFolders as ff
 from utils.io import Functions

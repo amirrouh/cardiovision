@@ -1,5 +1,5 @@
 # Setup ubuntu with Nvidia cuda support
-FROM nvidia/cuda:11.4.2-base-ubuntu20.04
+FROM nvidia/cuda:12.2.2-base-ubuntu20.04
 
 # Install base utilities
 RUN apt update && \

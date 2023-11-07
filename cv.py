@@ -3,8 +3,24 @@ import sys
 import platform
 import logging
 import config as config
+import log.log_format as log_format
 
 input_file = config.input_file
+
+# set up log
+script_name = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+if (not log_format.set_up_logging(console_log_output="stdout", console_log_level="warning", console_log_color=True,
+                        logfile_file="./log/" + script_name + ".log", logfile_log_level="debug", logfile_log_color=False,
+                        log_line_template="%(color_on)s[%(asctime)s] [%(threadName)s] [%(levelname)-8s] %(message)s%(color_off)s")):
+    print("Failed to set up logging, aborting.")
+
+'''
+logging.debug("Debug message example")
+logging.info("Info message example")
+logging.warning("Warning message example")
+logging.error("Error message example")
+logging.critical("Critical message example")
+'''
 
 # read images
 result = os.popen("docker image ls").readlines()
@@ -45,18 +61,26 @@ def install():
         return False
 
 def import_data():
-    print("Importing, augmenting, and preprocessing the training data ")
+    #print("Importing, augmenting, and preprocessing the training data ")
+    print(config.training_data_directory)
+    logging.info("Importing, augmenting, and preprocessing the training data ")
+    print("checkpoint1")
     os.system(f"docker cp {config.training_data_directory}/. cv_container:/home/data/training_data")
+    print("checkpoint2")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -i")
+    print("checkpoint3")
 
 def train():
-    print("Training cardiovision...")
+    #print("Training cardiovision...")
+    logging.info("Training cardiovision...")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -t")
 
 def predict():
-    print("copying the input file to the docker container...")
+    #print("copying the input file to the docker container...")
+    logging.info("copying the input file to the docker container...")
     os.system(f"docker cp {input_file} cv_container:/home/data/input_file.nrrd")
-    print("Predicting the outcome based on the trainig data...")
+    #print("Predicting the outcome based on the trainig data...")
+    logging.info("Predicting the outcome based on the trainig data...")
     if config.verbose:
         os.system(f"docker exec cv_container bash /home/app/scripts/cardiovision.sh -p -{config.component} -verbose")
     else:
@@ -64,27 +88,34 @@ def predict():
     
     os.system(f"docker cp cv_container:/home/app/shared {config.output_dir}")
 
-    print("prediction completed. Please check the output directory")
+    #print("prediction completed. Please check the output directory")
+    logging.info("prediction completed. Please check the output directory")
 
 def export():
-    print("Exporting trainig features...")
+    #print("Exporting trainig features...")
+    logging.info("Exporting trainig features...")
     os.system(f"python3 scripts/export.py")
 
 def reset():
-    print("Resetting the cardiovision...")
+    #print("Resetting the cardiovision...")
+    logging.info("Resetting the cardiovision...")
     try:
         os.system("docker stop cv_container")
         os.system("docker rm cv_container")
     except:
-        print("something went wrong, please try again or uninsall/install cardiovision")
+        #print("something went wrong, please try again or uninsall/install cardiovision")
+        logging.error("something went wrong, please try again or uninsall/install cardiovision")
 
 def uninstall():
-    print("Uninstalling the cardiovision")
+    #print("Uninstalling the cardiovision")
+    logging.info("Uninstalling the cardiovision")
     try:
         os.system("docker system prune -a")
-        print("Cardiovision successfully ininstalled.")
+        #print("Cardiovision successfully ininstalled.")
+        logging.info("Cardiovision successfully ininstalled.")
     except:
-        print("Something weng wrong please try to remove cv_image and cv_container using docker app")
+        #print("Something weng wrong please try to remove cv_image and cv_container using docker app")
+        logging.error("Something weng wrong please try to remove cv_image and cv_container using docker app")
 
 
 arg = sys.argv[1]
