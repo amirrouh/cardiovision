@@ -38,7 +38,7 @@ as long as the numbers are the same for any corresponding image and label.
 
 - Note: Make sure the defined files and directories in the "config.py" file exist and use the proper path format (For unix systems such as macos and linux, use "/" and in windows systems use "\\\\" to refer to the subdirectories.). The input file should be .nrrd format.
 
-- Note: For Mac silicon processor users, change the link in line 21 to "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh"
+- Note: For Mac silicon processor users, open "Dockerfile", change the link in line 21 to "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh"
 
 - Making sure the docker image and containers are installed and running properly. This can be done either within the docker desktop app or via the command line. For examle, for a unix terminal (MAC, LINUX, Windows WSL2) the command "docker ps" should return the info including the "cv_container" name.
 
@@ -107,6 +107,7 @@ or if another windows account is trying to use the docker, then run the followin
 
 - Verify that the NVIDIA driver is installed in WSL2 by running:
 > nvidia-smi
+
 Which should output the graphic card information. Note that the CUDA version shown should be 12.3, otherwise please uninstall and reinstall nvidia driver to update to the newest version
 
 ## How to Add a Module to CardioVision
