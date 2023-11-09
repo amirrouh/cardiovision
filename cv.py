@@ -4,6 +4,7 @@ import platform
 import logging
 import config as config
 import log.log_format as log_format
+import gc
 
 input_file = config.input_file
 
@@ -62,13 +63,16 @@ def install():
 
 def import_data():
     #print("Importing, augmenting, and preprocessing the training data ")
-    print(config.training_data_directory)
+    #print(config.training_data_directory)
     logging.info("Importing, augmenting, and preprocessing the training data ")
-    print("checkpoint1")
+    gc.collect()
+    #print("checkpoint1")
     os.system(f"docker cp {config.training_data_directory}/. cv_container:/home/data/training_data")
+    gc.collect()
     print("checkpoint2")
     os.system("docker exec cv_container bash /home/app/scripts/cardiovision.sh -i")
-    print("checkpoint3")
+    gc.collect()
+    #print("checkpoint3")
 
 def train():
     #print("Training cardiovision...")
