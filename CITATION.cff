@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+title: "CardioVision: A fully automated deep learning package for medical image segmentation and reconstruction generating digital twins for patients with aortic stenosis"
+doi: 10.1016/j.compmedimag.2023.102289
+date-released: 2023-08-19
+
+authors:
+  - family-names: "Rouhollahi"
+    given-names: "Amir"
+  - family-names: "Noel Willi"
+    given-names: "James"
+  - family-names: "Haltmeier"
+    given-names: "Sandra"
+  - family-names: "Mehrtash"
+    given-names: "Alireza"
+  - family-names: "Straughan"
+    given-names: "Ross"
+  - family-names: "Javadikasgari"
+    given-names: "Hoda"
+  - family-names: "Brown"
+    given-names: "Jonathan"
+  - family-names: "Itoh"
+    given-names: "Akinobu"
+  - family-names: "de la Cruz"
+    given-names: "Kim I."
+  - family-names: "Aikawa"
+    given-names: "Elena"
+  - family-names: "Edelman"
+    given-names: "Elazer R."
+  - family-names: "Nezami"
+    given-names: "Farhad R."
