@@ -116,3 +116,17 @@ Which should output the graphic card information. Note that the CUDA version sho
 - run.py file within the scriprt dir including a single function to run the module
 - copy the module source code within the src subdirectory
 - edit cv/bash_script.sh and add the conda environment for the new module according using other modules and template.
+
+## Citation
+
+If you use this project in your research, please cite it as follows:
+
+@article{Rouhollahi2023CardioVision,
+  title = {CardioVision: A fully automated deep learning package for medical image segmentation and reconstruction generating digital twins for patients with aortic stenosis},
+  author = {Amir Rouhollahi and James Noel Willi and Sandra Haltmeier and Alireza Mehrtash and Ross Straughan and Hoda Javadikasgari and Jonathan Brown and Akinobu Itoh and Kim I. de la Cruz and Elena Aikawa and Elazer R. Edelman and Farhad R. Nezami},
+  journal = {Computerized Medical Imaging and Graphics},
+  volume = {102289},
+  year = {2023},
+  doi = {10.1016/j.compmedimag.2023.102289},
+  url = {https://doi.org/10.1016/j.compmedimag.2023.102289}
+}
