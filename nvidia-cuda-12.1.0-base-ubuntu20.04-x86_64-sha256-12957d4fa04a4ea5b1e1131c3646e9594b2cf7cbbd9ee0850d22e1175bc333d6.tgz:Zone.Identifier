@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://developer.download.nvidia.com/compute/cuda/opensource/image/12.1.0/
+HostUrl=https://developer.download.nvidia.com/compute/cuda/opensource/image/12.1.0/nvidia-cuda-12.1.0-base-ubuntu20.04-x86_64-sha256-12957d4fa04a4ea5b1e1131c3646e9594b2cf7cbbd9ee0850d22e1175bc333d6.tgz
