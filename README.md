@@ -128,5 +128,5 @@ If you use this project in your research, please cite it as follows:
   volume = {102289},
   year = {2023},
   doi = {10.1016/j.compmedimag.2023.102289},
-  url = {https://doi.org/10.1016/j.compmedimag.2023.102289}
+  url = https://doi.org/10.1016/j.compmedimag.2023.102289
 }
